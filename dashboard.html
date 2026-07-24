@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tableau de bord — Job Univers</title>
+<style>
+  :root{
+    --navy:#0F1B2D;
+    --navy-light:#16273E;
+    --cream:#F7F5F1;
+    --gold:#E8A33D;
+    --teal:#2E7D6B;
+    --ink:#1A1F26;
+    --ink-soft:#5B6470;
+    --line:#E4E1D9;
+    --white:#FFFFFF;
+    --danger:#C4432E;
+    --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.brand{font-family:'Sora', sans-serif;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit; text-decoration:none;}
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    background:var(--navy); color:var(--white);
+    padding:16px 20px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-size:1.02rem; font-weight:700;}
+  .brand-mark{
+    width:30px; height:30px; border-radius:8px;
+    background:linear-gradient(135deg, var(--gold), var(--teal));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Sora', sans-serif; font-weight:800; color:var(--navy); font-size:0.85rem;
+  }
+  .topbar-actions{display:flex; align-items:center; gap:14px;}
+  .icon-btn{
+    background:none; border:none; color:rgba(255,255,255,0.75);
+    font-size:1rem; cursor:pointer;
+  }
+  .logout-link{font-size:0.8rem; color:rgba(255,255,255,0.75); border:1px solid rgba(255,255,255,0.25); padding:6px 12px; border-radius:100px;}
+
+  /* ---------- WELCOME HEADER ---------- */
+  .welcome{
+    background:var(--navy); color:var(--white);
+    padding:6px 20px 28px;
+  }
+  .welcome-name{font-size:1.4rem; font-weight:800; margin-bottom:4px;}
+  .welcome-sub{font-size:0.86rem; color:rgba(255,255,255,0.6);}
+
+  /* ---------- STAT STRIP ---------- */
+  .stat-row{
+    display:flex; gap:10px;
+    margin:-20px 16px 0;
+    position:relative; z-index:2;
+  }
+  .stat-card{
+    flex:1; background:var(--white); border-radius:12px;
+    padding:14px 12px; box-shadow:0 12px 24px -10px rgba(15,27,45,0.18);
+    text-align:center;
+  }
+  .stat-card .num{font-family:'Sora'; font-size:1.3rem; font-weight:800; color:var(--navy);}
+  .stat-card .lbl{font-family:'IBM Plex Mono'; font-size:0.62rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;}
+
+  /* ---------- MAIN ---------- */
+  main{max-width:640px; margin:0 auto; padding:32px 20px 40px;}
+
+  .section{margin-bottom:32px;}
+  .section-head{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:14px;
+  }
+  .section-head h2{font-size:1.08rem; font-weight:700;}
+  .link-small{font-size:0.8rem; font-weight:600; color:var(--navy);}
+
+  /* ---------- PROFILE CARD ---------- */
+  .profile-card{
+    background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
+    padding:18px; display:flex; gap:14px; align-items:center;
+  }
+  .avatar{
+    width:52px; height:52px; border-radius:50%;
+    background:linear-gradient(135deg, var(--gold), var(--teal));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Sora'; font-weight:800; color:var(--navy); font-size:1.1rem;
+    flex-shrink:0;
+  }
+  .profile-info{flex:1;}
+  .profile-info .name{font-weight:700; font-size:0.98rem; margin-bottom:2px;}
+  .profile-info .role{font-size:0.82rem; color:var(--ink-soft); margin-bottom:8px;}
+  .completeness{
+    height:6px; background:var(--line); border-radius:100px; overflow:hidden;
+  }
+  .completeness-fill{height:100%; background:var(--teal); width:60%;}
+  .completeness-label{font-family:'IBM Plex Mono'; font-size:0.66rem; color:var(--ink-soft); margin-top:5px;}
+
+  /* ---------- APPLICATIONS ---------- */
+  .app-list{display:flex; flex-direction:column; gap:12px;}
+  .app-card{
+    background:var(--white); border:1px solid var(--line); border-radius:12px;
+    padding:14px 16px;
+  }
+  .app-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:4px;}
+  .app-title{font-weight:700; font-size:0.94rem;}
+  .app-company{font-size:0.8rem; color:var(--ink-soft); margin-bottom:10px;}
+  .app-bottom{display:flex; align-items:center; justify-content:space-between;}
+  .app-date{font-family:'IBM Plex Mono'; font-size:0.68rem; color:#A6ACB5;}
+
+  .status{
+    font-family:'IBM Plex Mono'; font-size:0.64rem; text-transform:uppercase;
+    letter-spacing:0.04em; padding:4px 10px; border-radius:100px; font-weight:600;
+    white-space:nowrap;
+  }
+  .status.pending{background:#FFF4E0; color:#B57612;}
+  .status.interview{background:#E3F0EE; color:var(--teal);}
+  .status.rejected{background:#FBEAE7; color:var(--danger);}
+  .status.accepted{background:#E4F3E9; color:#22823F;}
+
+  /* ---------- SAVED JOBS ---------- */
+  .saved-list{display:flex; flex-direction:column; gap:10px;}
+  .saved-card{
+    display:flex; justify-content:space-between; align-items:center;
+    background:var(--white); border:1px solid var(--line); border-radius:10px;
+    padding:12px 14px;
+  }
+  .saved-info .t{font-weight:600; font-size:0.88rem;}
+  .saved-info .c{font-size:0.76rem; color:var(--ink-soft);}
+  .btn-mini{
+    font-family:'Sora'; font-size:0.78rem; font-weight:600;
+    color:var(--white); background:var(--navy); border:none;
+    border-radius:8px; padding:7px 14px; cursor:pointer;
+  }
+
+  .empty-state{
+    text-align:center; padding:28px 16px; color:var(--ink-soft); font-size:0.86rem;
+    background:var(--white); border:1px dashed var(--line); border-radius:12px;
+  }
+
+  footer{
+    text-align:center; padding:24px 20px; font-family:'IBM Plex Mono';
+    font-size:0.72rem; color:#A6ACB5;
+  }
+
+  [hidden]{display:none !important;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="brand-mark">JU</span>Job Univers</div>
+  <div class="topbar-actions">
+    <a href="index.html" class="icon-btn" title="Accueil">🏠</a>
+    <a href="login.html" class="logout-link">Déconnexion</a>
+  </div>
+</div>
+
+<div class="welcome">
+  <div class="welcome-name" id="candidate-name">Bonjour 👋</div>
+  <div class="welcome-sub">Voici un aperçu de votre activité sur Job Univers.</div>
+</div>
+
+<div class="stat-row">
+  <div class="stat-card">
+    <div class="num" id="stat-sent">0</div>
+    <div class="lbl">Envoyées</div>
+  </div>
+  <div class="stat-card">
+    <div class="num" id="stat-pending">0</div>
+    <div class="lbl">En attente</div>
+  </div>
+  <div class="stat-card">
+    <div class="num" id="stat-interview">0</div>
+    <div class="lbl">Entretiens</div>
+  </div>
+</div>
+
+<main>
+
+  <div class="section">
+    <div class="section-head">
+      <h2>Mon profil</h2>
+      <a href="#" class="link-small">Modifier</a>
+    </div>
+    <div class="profile-card">
+      <div class="avatar" id="avatar-initials">--</div>
+      <div class="profile-info">
+        <div class="name" id="profile-name">Complétez votre profil</div>
+        <div class="role" id="profile-role">Aucun métier renseigné</div>
+        <div class="completeness"><div class="completeness-fill" id="completeness-bar"></div></div>
+        <div class="completeness-label" id="completeness-label">0% complété</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <h2>Mes candidatures</h2>
+    </div>
+    <div class="app-list" id="app-list">
+      <!-- rempli par JS -->
+    </div>
+    <div class="empty-state" id="app-empty" hidden>
+      Vous n'avez encore postulé à aucune offre.<br>
+      <a href="index.html" class="link-small">Parcourir les offres →</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <h2>Offres sauvegardées</h2>
+    </div>
+    <div class="saved-list" id="saved-list">
+      <!-- rempli par JS -->
+    </div>
+    <div class="empty-state" id="saved-empty" hidden>
+      Aucune offre sauvegardée pour l'instant.
+    </div>
+  </div>
+
+</main>
+
+<footer>© 2026 Job Univers — Tous droits réservés</footer>
+
+<script>
+  /* ==========================================================
+     Données de démonstration — à remplacer par de vraies
+     données (base de données / API) quand le backend existera.
+     ========================================================== */
+  const candidate = {
+    name: "",              // ex: "Junior Bakayoko"
+    role: "",               // ex: "Agent QHSE"
+    completeness: 0          // 0 à 100
+  };
+
+  const applications = [
+    // Exemple de structure (décommentez et adaptez) :
+    // { title: "Agent HSE", company: "Secteur minier", date: "Il y a 2j", status: "pending" },
+    // { title: "Informaticien", company: "Entreprise internationale", date: "Il y a 5j", status: "interview" },
+  ];
+
+  const savedJobs = [
+    // { title: "Superviseur QHSE", company: "Côte d'Ivoire" },
+  ];
+
+  /* ---------- Rendu du profil ---------- */
+  document.getElementById('candidate-name').textContent =
+    candidate.name ? `Bonjour, ${candidate.name.split(' ')[0]} 👋` : "Bonjour 👋";
+
+  document.getElementById('profile-name').textContent =
+    candidate.name || "Complétez votre profil";
+  document.getElementById('profile-role').textContent =
+    candidate.role || "Aucun métier renseigné";
+  document.getElementById('completeness-bar').style.width = candidate.completeness + '%';
+  document.getElementById('completeness-label').textContent = candidate.completeness + '% complété';
+
+  const initials = candidate.name
+    ? candidate.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase()
+    : '--';
+  document.getElementById('avatar-initials').textContent = initials;
+
+  /* ---------- Rendu des candidatures ---------- */
+  const statusLabels = {
+    pending: "En attente",
+    interview: "Entretien",
+    rejected: "Refusée",
+    accepted: "Acceptée"
+  };
+
+  const appList = document.getElementById('app-list');
+  if (applications.length === 0) {
+    document.getElementById('app-empty').hidden = false;
+  } else {
+    applications.forEach(app => {
+      const card = document.createElement('div');
+      card.className = 'app-card';
+      card.innerHTML = `
+        <div class="app-top">
+          <div>
+            <div class="app-title">${app.title}</div>
+            <div class="app-company">${app.company}</div>
+          </div>
+          <span class="status ${app.status}">${statusLabels[app.status] || app.status}</span>
+        </div>
+        <div class="app-bottom">
+          <span class="app-date">${app.date}</span>
+        </div>
+      `;
+      appList.appendChild(card);
+    });
+  }
+
+  /* ---------- Rendu des offres sauvegardées ---------- */
+  const savedList = document.getElementById('saved-list');
+  if (savedJobs.length === 0) {
+    document.getElementById('saved-empty').hidden = false;
+  } else {
+    savedJobs.forEach(job => {
+      const card = document.createElement('div');
+      card.className = 'saved-card';
+      card.innerHTML = `
+        <div class="saved-info">
+          <div class="t">${job.title}</div>
+          <div class="c">${job.company}</div>
+        </div>
+        <button type="button" class="btn-mini">Voir</button>
+      `;
+      savedList.appendChild(card);
+    });
+  }
+
+  /* ---------- Mise à jour des statistiques ---------- */
+  document.getElementById('stat-sent').textContent = applications.length;
+  document.getElementById('stat-pending').textContent =
+    applications.filter(a => a.status === 'pending').length;
+  document.getElementById('stat-interview').textContent =
+    applications.filter(a => a.status === 'interview').length;
+</script>
+
+</body>
+</html>
+
