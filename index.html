@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Univers - Trouvez votre emploi partout dans le monde</title>
+<style>
+  :root{
+    --navy:#0F1B2D;
+    --navy-light:#16273E;
+    --cream:#F7F5F1;
+    --gold:#E8A33D;
+    --teal:#2E7D6B;
+    --ink:#1A1F26;
+    --ink-soft:#5B6470;
+    --line:#E4E1D9;
+    --white:#FFFFFF;
+    --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.brand{font-family:'Sora', sans-serif;}
+  .mono{font-family:'IBM Plex Mono', monospace; letter-spacing:0.02em;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+
+  /* ---------- HEADER / HERO ---------- */
+  header.hero{
+    background:
+      radial-gradient(circle at 15% 20%, rgba(232,163,61,0.14), transparent 40%),
+      radial-gradient(circle at 85% 0%, rgba(46,125,107,0.18), transparent 45%),
+      var(--navy);
+    color:var(--white);
+    padding:52px 24px 40px;
+    position:relative;
+    overflow:hidden;
+  }
+  .nav-row{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:44px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-size:1.15rem; font-weight:700; color:var(--white);
+  }
+  .brand-mark{
+    width:34px; height:34px; border-radius:9px;
+    background:linear-gradient(135deg, var(--gold), var(--teal));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Sora', sans-serif; font-weight:800; color:var(--navy); font-size:0.95rem;
+  }
+  .nav-cta{
+    font-size:0.82rem; font-weight:600; color:var(--white);
+    border:1px solid rgba(255,255,255,0.25);
+    padding:8px 16px; border-radius:100px;
+  }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem;
+    color:var(--gold); text-transform:uppercase; letter-spacing:0.12em;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--gold);}
+
+  h1.headline{
+    font-size:2.35rem; line-height:1.12; font-weight:800;
+    max-width:620px; margin-bottom:14px;
+    letter-spacing:-0.01em;
+  }
+  h1.headline .accent{color:var(--gold);}
+  p.sub{
+    font-size:1rem; color:rgba(255,255,255,0.68);
+    max-width:480px; margin-bottom:32px; line-height:1.5;
+  }
+
+  /* stat strip — signature element */
+  .stat-strip{
+    display:flex; gap:0; margin-bottom:0;
+    border-top:1px solid rgba(255,255,255,0.14);
+    padding-top:20px;
+  }
+  .stat{
+    flex:1; padding-right:16px;
+  }
+  .stat .num{font-family:'Sora',sans-serif; font-size:1.35rem; font-weight:700; color:var(--white);}
+  .stat .lbl{font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.06em; margin-top:2px;}
+
+  /* ---------- SEARCH CARD (floats over hero/body seam) ---------- */
+  .search-card{
+    background:var(--white);
+    border-radius:var(--radius);
+    box-shadow:0 20px 40px -12px rgba(15,27,45,0.28);
+    margin:-34px 20px 0;
+    padding:18px;
+    position:relative;
+    z-index:5;
+  }
+  .search-row{display:flex; flex-direction:column; gap:10px;}
+  .field{
+    display:flex; align-items:center; gap:10px;
+    border:1.5px solid var(--line);
+    border-radius:10px; padding:12px 14px;
+  }
+  .field svg{flex-shrink:0; opacity:0.5;}
+  .field input{
+    border:none; outline:none; font-family:'Inter'; font-size:0.95rem;
+    width:100%; background:transparent; color:var(--ink);
+  }
+  .field input::placeholder{color:#9AA1AB;}
+  .btn-search{
+    background:var(--navy); color:var(--white);
+    border:none; border-radius:10px; padding:13px;
+    font-family:'Sora',sans-serif; font-weight:600; font-size:0.95rem;
+    cursor:pointer; transition:background 0.15s ease;
+  }
+  .btn-search:hover{background:var(--navy-light);}
+
+  /* ---------- LISTINGS ---------- */
+  main{max-width:640px; margin:0 auto; padding:40px 20px 20px;}
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin-bottom:20px;
+  }
+  .section-head h2{font-size:1.3rem; font-weight:700;}
+  .section-head .count{font-family:'IBM Plex Mono'; font-size:0.75rem; color:var(--ink-soft);}
+
+  .job-list{display:flex; flex-direction:column; gap:14px;}
+  .job-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-left:4px solid var(--cat-color, var(--teal));
+    border-radius:12px;
+    padding:18px 18px 16px;
+    transition:box-shadow 0.15s ease, transform 0.15s ease;
+  }
+  .job-card:hover{box-shadow:0 8px 24px -8px rgba(15,27,45,0.16); transform:translateY(-1px);}
+
+  .job-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px;}
+  .job-tag{
+    font-family:'IBM Plex Mono'; font-size:0.66rem; text-transform:uppercase;
+    letter-spacing:0.05em; padding:3px 9px; border-radius:100px;
+    background:color-mix(in srgb, var(--cat-color, var(--teal)) 14%, white);
+    color:var(--cat-color, var(--teal));
+    font-weight:600; white-space:nowrap;
+  }
+  .job-date{font-family:'IBM Plex Mono'; font-size:0.68rem; color:#A6ACB5;}
+
+  .job-title{font-size:1.08rem; font-weight:700; margin-bottom:4px; color:var(--ink);}
+  .job-meta{
+    display:flex; flex-wrap:wrap; gap:12px; margin-bottom:14px;
+    font-size:0.84rem; color:var(--ink-soft);
+  }
+  .job-meta span{display:flex; align-items:center; gap:5px;}
+  .job-meta svg{opacity:0.55;}
+
+  .job-bottom{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+  .job-salary{font-family:'IBM Plex Mono'; font-size:0.78rem; color:var(--ink); font-weight:500;}
+  .btn-apply{
+    background:var(--navy); color:var(--white);
+    border:none; border-radius:8px; padding:9px 18px;
+    font-family:'Sora',sans-serif; font-weight:600; font-size:0.84rem;
+    cursor:pointer;
+  }
+  .btn-apply:hover{background:var(--navy-light);}
+
+  .view-all{
+    display:block; text-align:center; margin-top:24px;
+    padding:13px; border:1.5px solid var(--line); border-radius:10px;
+    font-family:'Sora'; font-weight:600; font-size:0.9rem; color:var(--navy);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    margin-top:56px; background:var(--navy); color:rgba(255,255,255,0.55);
+    padding:28px 20px; text-align:center; font-size:0.78rem;
+  }
+  footer .brand{justify-content:center; margin-bottom:10px; color:var(--white);}
+
+  @media (min-width:640px){
+    .search-row{flex-direction:row;}
+    .field{flex:1;}
+    .btn-search{flex-shrink:0; padding:0 26px;}
+    h1.headline{font-size:2.9rem;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .job-card{transition:none;}
+  }
+</style>
+<script src="chatbot.js"></script>
+</head>
+<body>
+
+<header class="hero">
+  <div class="nav-row">
+    <div class="brand">
+      <span class="brand-mark">JU</span>
+      Job Univers
+    </div>
+    <a href="#" class="nav-cta">Publier une offre</a>
+  </div>
+
+  <div class="eyebrow">Plateforme internationale de recrutement</div>
+  <h1 class="headline">Trouvez votre <span class="accent">emploi</span>, partout dans le monde.</h1>
+  <p class="sub">Des offres vérifiées, mises à jour chaque jour, dans tous les secteurs et sur tous les continents.</p>
+
+  <div class="stat-strip">
+    <div class="stat"><div class="num">512</div><div class="lbl">Offres actives</div></div>
+    <div class="stat"><div class="num">34</div><div class="lbl">Pays couverts</div></div>
+    <div class="stat"><div class="num">24h</div><div class="lbl">Mise à jour</div></div>
+  </div>
+</header>
+
+<div class="search-card">
+  <div class="search-row">
+    <div class="field">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6470" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Métier, compétence…">
+    </div>
+    <div class="field">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6470" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <input type="text" placeholder="Pays ou ville">
+    </div>
+    <button type="button" class="btn-search">Rechercher</button>
+  </div>
+</div>
+
+<main>
+  <div class="section-head">
+    <h2>Dernières offres</h2>
+    <span class="count mono">512 résultats</span>
+  </div>
+
+  <div class="job-list">
+
+    <div class="job-card" style="--cat-color:#2E5FE8;">
+      <div class="job-top">
+        <span class="job-tag">Informatique</span>
+        <span class="job-date">Publié il y a 2j</span>
+      </div>
+      <div class="job-title">Informaticien</div>
+      <div class="job-meta">
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Entreprise internationale</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>France</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3v4M8 3v4M2 11h20"/></svg>CDI</span>
+      </div>
+      <div class="job-bottom">
+        <span class="job-salary">3 200 – 4 000 € / mois</span>
+        <button type="button" class="btn-apply">Postuler</button>
+      </div>
+    </div>
+
+    <div class="job-card" style="--cat-color:#2E7D6B;">
+      <div class="job-top">
+        <span class="job-tag">HSE</span>
+        <span class="job-date">Publié il y a 5j</span>
+      </div>
+      <div class="job-title">Agent HSE</div>
+      <div class="job-meta">
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Secteur minier</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Côte d'Ivoire</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3v4M8 3v4M2 11h20"/></svg>CDD</span>
+      </div>
+      <div class="job-bottom">
+        <span class="job-salary">Salaire à négocier</span>
+        <button type="button" class="btn-apply">Postuler</button>
+      </div>
+    </div>
+
+  </div>
+
+  <a href="login.html" class="nav-cta">Connexion</a>
+</main>
+
+<footer>
+  <div class="brand"><span class="brand-mark" style="width:26px;height:26px;font-size:0.75rem;">JU</span>Job Univers</div>
+  © 2026 Job Univers — Tous droits réservés
+</footer>
+
+</body>
+</html>
+

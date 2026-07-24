@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f8ff;
+}
+
+header {
+    background: linear-gradient(135deg, #0066ff, #00c6ff);
+    color: white;
+    padding: 25px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-icon {
+    font-size: 50px;
+}
+
+.logo h1 {
+    font-size: 35px;
+}
+
+.logo span {
+    color: #ffe600;
+}
+
+nav {
+    margin-top: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+.hero {
+    text-align: center;
+    padding: 50px 10px;
+}
+
+.hero h2 {
+    font-size: 40px;
+}
+.logo-icon img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
