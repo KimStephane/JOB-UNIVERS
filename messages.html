@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Messagerie — Job Univers</title>
+<style>
+  :root{
+    --navy:#0F1B2D;
+    --navy-light:#16273E;
+    --cream:#F7F5F1;
+    --gold:#E8A33D;
+    --teal:#2E7D6B;
+    --ink:#1A1F26;
+    --ink-soft:#5B6470;
+    --line:#E4E1D9;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    height:100vh;
+    display:flex; flex-direction:column;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,.brand{font-family:'Sora', sans-serif;}
+  a{color:inherit; text-decoration:none;}
+
+  .topbar{
+    background:var(--navy); color:var(--white);
+    padding:14px 18px; display:flex; align-items:center; justify-content:space-between;
+    flex-shrink:0;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-size:0.98rem; font-weight:700;}
+  .brand-mark{
+    width:28px; height:28px; border-radius:7px;
+    background:linear-gradient(135deg, var(--gold), var(--teal));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Sora', sans-serif; font-weight:800; color:var(--navy); font-size:0.78rem;
+  }
+  .back-link{font-size:0.8rem; color:rgba(255,255,255,0.75);}
+
+  /* ---------- SETUP (identification) ---------- */
+  .setup-wrap{max-width:420px; margin:auto; padding:24px; width:100%;}
+  .setup-card{
+    background:var(--white); border:1px solid var(--line); border-radius:14px; padding:22px;
+  }
+  .setup-card h2{font-size:1.05rem; margin-bottom:6px;}
+  .setup-card p{font-size:0.84rem; color:var(--ink-soft); margin-bottom:16px;}
+  .field-group{margin-bottom:14px;}
+  label{display:block; font-size:0.76rem; font-weight:600; margin-bottom:6px;}
+  input[type="email"]{
+    width:100%; border:1.5px solid var(--line); border-radius:9px; padding:11px 13px;
+    font-family:'Inter'; font-size:0.92rem; outline:none;
+  }
+  input[type="email"]:focus{border-color:var(--navy);}
+  .btn-primary{
+    width:100%; background:var(--navy); color:var(--white); border:none;
+    border-radius:9px; padding:12px; font-family:'Sora'; font-weight:700; font-size:0.9rem;
+    cursor:pointer; margin-top:4px;
+  }
+
+  /* ---------- CHAT VIEW ---------- */
+  .chat-header{
+    background:var(--white); border-bottom:1px solid var(--line);
+    padding:12px 16px; display:flex; align-items:center; gap:10px; flex-shrink:0;
+  }
+  .chat-avatar{
+    width:36px; height:36px; border-radius:50%;
+    background:linear-gradient(135deg, var(--gold), var(--teal));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Sora'; font-weight:800; color:var(--navy); font-size:0.85rem; flex-shrink:0;
+  }
+  .chat-with{font-weight:700; font-size:0.92rem;}
+  .chat-sub{font-size:0.74rem; color:var(--ink-soft);}
+  .switch-btn{margin-left:auto; font-size:0.76rem; color:var(--navy); font-weight:600; background:none; border:none; cursor:pointer;}
+
+  .messages-area{
+    flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:8px;
+  }
+  .bubble{
+    max-width:75%; padding:10px 13px; border-radius:14px; font-size:0.88rem; line-height:1.4;
+  }
+  .bubble.mine{
+    align-self:flex-end; background:var(--navy); color:var(--white); border-bottom-right-radius:3px;
+  }
+  .bubble.theirs{
+    align-self:flex-start; background:var(--white); border:1px solid var(--line); border-bottom-left-radius:3px;
+  }
+  .bubble .time{
+    display:block; font-size:0.62rem; margin-top:3px; opacity:0.6;
+  }
+  .empty-chat{
+    margin:auto; text-align:center; color:var(--ink-soft); font-size:0.86rem; padding:20px;
+  }
+
+  .input-bar{
+    display:flex; gap:8px; padding:12px; background:var(--white);
+    border-top:1px solid var(--line); flex-shrink:0;
+  }
+  .input-bar input{
+    flex:1; border:1.5px solid var(--line); border-radius:20px; padding:11px 16px;
+    font-family:'Inter'; font-size:0.9rem; outline:none;
+  }
+  .input-bar input:focus{border-color:var(--navy);}
+  .send-btn{
+    background:var(--navy); color:var(--white); border:none; border-radius:50%;
+    width:42px; height:42px; flex-shrink:0; cursor:pointer; font-size:1.1rem;
+  }
+
+  [hidden]{display:none !important;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="brand-mark">JU</span>Job Univers</div>
+  <a href="index.html" class="back-link">← Accueil</a>
+</div>
+
+<!-- ---------- ÉCRAN 1 : identification ---------- -->
+<div class="setup-wrap" id="setup-screen">
+  <div class="setup-card">
+    <h2>Messagerie</h2>
+    <p>Entrez votre e-mail et celui de la personne avec qui échanger.</p>
+
+    <div class="field-group">
+      <label for="my-email">Votre e-mail</label>
+      <input type="email" id="my-email" placeholder="vous@exemple.com">
+    </div>
+    <div class="field-group">
+      <label for="their-email">E-mail du destinataire</label>
+      <input type="email" id="their-email" placeholder="recruteur@entreprise.com">
+    </div>
+    <button type="button" class="btn-primary" id="start-chat-btn">Démarrer la conversation</button>
+  </div>
+</div>
+
+<!-- ---------- ÉCRAN 2 : conversation ---------- -->
+<div id="chat-screen" hidden style="display:flex; flex-direction:column; flex:1; min-height:0;">
+  <div class="chat-header">
+    <div class="chat-avatar" id="chat-avatar">--</div>
+    <div>
+      <div class="chat-with" id="chat-with-name">—</div>
+      <div class="chat-sub">Conversation privée</div>
+    </div>
+    <button type="button" class="switch-btn" id="switch-btn">Changer</button>
+  </div>
+
+  <div class="messages-area" id="messages-area">
+    <div class="empty-chat">Chargement de la conversation…</div>
+  </div>
+
+  <form class="input-bar" id="send-form">
+    <input type="text" id="message-input" placeholder="Écrire un message…" autocomplete="off" required>
+    <button type="submit" class="send-btn">➤</button>
+  </form>
+</div>
+
+<script>
+  /* ⚠️ Adresse du serveur de messagerie : fonctionne en local uniquement */
+  const API_BASE = "http://localhost:3001";
+
+  const setupScreen = document.getElementById('setup-screen');
+  const chatScreen = document.getElementById('chat-screen');
+  const myEmailInput = document.getElementById('my-email');
+  const theirEmailInput = document.getElementById('their-email');
+
+  let myEmail = localStorage.getItem('ju_chat_me') || '';
+  let theirEmail = localStorage.getItem('ju_chat_with') || '';
+
+  // Pré-remplit avec l'e-mail du candidat déjà inscrit, si disponible
+  const savedProfile = JSON.parse(localStorage.getItem('ju_candidate') || 'null');
+  if (!myEmail && savedProfile && savedProfile.email) {
+    myEmail = savedProfile.email;
+  }
+
+  // Si on arrive depuis un lien "Contacter le recruteur" (ex: job-detail.html)
+  const urlParams = new URLSearchParams(window.location.search);
+  const withParam = urlParams.get('with');
+  if (withParam) {
+    theirEmail = withParam;
+  }
+
+  function initials(email) {
+    return email ? email[0].toUpperCase() : '?';
+  }
+
+  function openChat() {
+    setupScreen.hidden = true;
+    chatScreen.hidden = false;
+    document.getElementById('chat-with-name').textContent = theirEmail;
+    document.getElementById('chat-avatar').textContent = initials(theirEmail);
+    loadMessages();
+    pollInterval = setInterval(loadMessages, 3000);
+  }
+
+  document.getElementById('start-chat-btn').addEventListener('click', () => {
+    const me = myEmailInput.value.trim().toLowerCase();
+    const them = theirEmailInput.value.trim().toLowerCase();
+    if (!me.includes('@') || !them.includes('@')) {
+      alert("Merci d'entrer deux adresses e-mail valides.");
+      return;
+    }
+    myEmail = me;
+    theirEmail = them;
+    localStorage.setItem('ju_chat_me', myEmail);
+    localStorage.setItem('ju_chat_with', theirEmail);
+    openChat();
+  });
+
+  document.getElementById('switch-btn').addEventListener('click', () => {
+    clearInterval(pollInterval);
+    chatScreen.hidden = true;
+    setupScreen.hidden = false;
+    myEmailInput.value = myEmail;
+    theirEmailInput.value = '';
+  });
+
+  let pollInterval = null;
+  let lastRenderedCount = 0;
+
+  async function loadMessages() {
+    try {
+      const res = await fetch(`${API_BASE}/messages?a=${encodeURIComponent(myEmail)}&b=${encodeURIComponent(theirEmail)}`);
+      const data = await res.json();
+      renderMessages(data.messages || []);
+    } catch (err) {
+      document.getElementById('messages-area').innerHTML =
+        '<div class="empty-chat">⚠️ Impossible de contacter le serveur de messagerie. Vérifiez qu\'il tourne bien.</div>';
+    }
+  }
+
+  function renderMessages(messages) {
+    if (messages.length === lastRenderedCount) return; // évite de rafraîchir inutilement
+    lastRenderedCount = messages.length;
+
+    const area = document.getElementById('messages-area');
+    if (messages.length === 0) {
+      area.innerHTML = '<div class="empty-chat">Aucun message pour l\'instant. Dites bonjour 👋</div>';
+      return;
+    }
+
+    area.innerHTML = messages.map(m => {
+      const mine = m.from === myEmail;
+      const time = new Date(m.timestamp).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+      return `<div class="bubble ${mine ? 'mine' : 'theirs'}">${escapeHtml(m.text)}<span class="time">${time}</span></div>`;
+    }).join('');
+
+    area.scrollTop = area.scrollHeight;
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  document.getElementById('send-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = document.getElementById('message-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    input.value = '';
+    try {
+      await fetch(`${API_BASE}/messages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ from: myEmail, to: theirEmail, text })
+      });
+      lastRenderedCount = -1; // force le rafraîchissement
+      loadMessages();
+    } catch (err) {
+      alert("Échec de l'envoi du message.");
+    }
+  });
+
+  /* ---------- Démarrage automatique si déjà identifié ---------- */
+  if (myEmail && theirEmail) {
+    localStorage.setItem('ju_chat_me', myEmail);
+    localStorage.setItem('ju_chat_with', theirEmail);
+    myEmailInput.value = myEmail;
+    theirEmailInput.value = theirEmail;
+    openChat();
+  } else if (myEmail) {
+    myEmailInput.value = myEmail;
+    if (theirEmail) theirEmailInput.value = theirEmail;
+  }
+</script>
+
+</body>
+</html>
+

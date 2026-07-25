@@ -1,1 +1,223 @@
-sed -i 's|<button class="btn-apply">Postuler</button>\n        </div>\n    </div>\n\n    <div class="job-card" style="--cat-color:#2E7D6B;">|XXPLACEHOLDERXX|' index.html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Détail de l'offre — Job Univers</title>
+<style>
+  :root{
+    --navy:#0F1B2D;
+    --navy-light:#16273E;
+    --cream:#F7F5F1;
+    --gold:#E8A33D;
+    --teal:#2E7D6B;
+    --ink:#1A1F26;
+    --ink-soft:#5B6470;
+    --line:#E4E1D9;
+    --white:#FFFFFF;
+    --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,.brand{font-family:'Sora', sans-serif;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit; text-decoration:none;}
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    background:var(--navy); color:var(--white);
+    padding:16px 20px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-size:1.02rem; font-weight:700;}
+  .brand-mark{
+    width:30px; height:30px; border-radius:8px;
+    background:linear-gradient(135deg, var(--gold), var(--teal));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Sora', sans-serif; font-weight:800; color:var(--navy); font-size:0.85rem;
+  }
+  .back-link{font-size:0.82rem; color:rgba(255,255,255,0.75); display:flex; align-items:center; gap:5px;}
+
+  /* ---------- MAIN ---------- */
+  main{max-width:640px; margin:0 auto; padding:24px 20px 40px;}
+
+  .job-header{
+    background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px; margin-bottom:20px;
+    border-left:5px solid var(--cat-color, var(--teal));
+  }
+  .job-tag{
+    display:inline-block; font-family:'IBM Plex Mono'; font-size:0.68rem; text-transform:uppercase;
+    letter-spacing:0.05em; padding:4px 11px; border-radius:100px;
+    background:color-mix(in srgb, var(--cat-color, var(--teal)) 14%, white);
+    color:var(--cat-color, var(--teal));
+    font-weight:600; margin-bottom:12px;
+  }
+  .job-title{font-size:1.4rem; font-weight:800; margin-bottom:6px; line-height:1.2;}
+  .job-company{font-size:0.95rem; color:var(--ink-soft); margin-bottom:16px;}
+
+  .job-meta-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:12px;
+    padding-top:14px; border-top:1px solid var(--line);
+  }
+  .meta-item{display:flex; align-items:flex-start; gap:8px; font-size:0.84rem;}
+  .meta-item svg{flex-shrink:0; opacity:0.55; margin-top:1px;}
+  .meta-item .lbl{display:block; font-family:'IBM Plex Mono'; font-size:0.62rem; color:#A6ACB5; text-transform:uppercase; margin-bottom:1px;}
+  .meta-item .val{font-weight:600;}
+
+  .section{margin-bottom:22px;}
+  .section h2{font-size:1rem; font-weight:700; margin-bottom:10px;}
+  .section p, .section li{font-size:0.9rem; color:var(--ink-soft); line-height:1.6;}
+  .section ul{padding-left:20px; margin-top:6px;}
+  .section li{margin-bottom:4px;}
+
+  .apply-bar{
+    position:sticky; bottom:0; background:var(--white);
+    border-top:1px solid var(--line); padding:14px 20px;
+    display:flex; gap:10px; align-items:center;
+    margin:0 -20px; margin-top:28px;
+  }
+  .apply-salary{flex:1; font-family:'IBM Plex Mono'; font-size:0.8rem; font-weight:600;}
+  .btn-save{
+    background:var(--white); border:1.5px solid var(--line); color:var(--navy);
+    border-radius:10px; padding:12px 16px; font-family:'Sora'; font-weight:600; font-size:0.88rem;
+    cursor:pointer;
+  }
+  .btn-apply-big{
+    background:var(--navy); color:var(--white); border:none;
+    border-radius:10px; padding:12px 22px; font-family:'Sora'; font-weight:700; font-size:0.9rem;
+    cursor:pointer; flex-shrink:0;
+  }
+  .btn-apply-big:hover{background:var(--navy-light);}
+
+  .confirm-box{
+    display:none; background:#E4F3E9; border:1px solid #B8DFC4; color:#22823F;
+    border-radius:10px; padding:14px; margin-top:14px; font-size:0.86rem; text-align:center;
+  }
+  .confirm-box.show{display:block;}
+
+  footer{
+    text-align:center; padding:24px 20px; font-family:'IBM Plex Mono';
+    font-size:0.72rem; color:#A6ACB5;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="brand-mark">JU</span>Job Univers</div>
+  <a href="index.html" class="back-link">← Retour aux offres</a>
+</div>
+
+<main>
+
+  <div class="job-header" id="job-header">
+    <span class="job-tag" id="job-tag">Catégorie</span>
+    <div class="job-title" id="job-title">Titre de l'offre</div>
+    <div class="job-company" id="job-company">Entreprise</div>
+
+    <div class="job-meta-grid">
+      <div class="meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span><span class="lbl">Lieu</span><span class="val" id="job-location">—</span></span>
+      </div>
+      <div class="meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3v4M8 3v4M2 11h20"/></svg>
+        <span><span class="lbl">Contrat</span><span class="val" id="job-contract">—</span></span>
+      </div>
+      <div class="meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <span><span class="lbl">Publié</span><span class="val" id="job-date">—</span></span>
+      </div>
+      <div class="meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        <span><span class="lbl">Secteur</span><span class="val" id="job-sector">—</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Description du poste</h2>
+    <p id="job-description">Description non renseignée pour cette offre.</p>
+  </div>
+
+  <div class="section">
+    <h2>Profil recherché</h2>
+    <ul id="job-requirements">
+      <li>Expérience pertinente dans le domaine</li>
+      <li>Bon relationnel et esprit d'équipe</li>
+      <li>Disponibilité immédiate</li>
+    </ul>
+  </div>
+
+  <div class="apply-bar">
+    <span class="apply-salary" id="job-salary">Salaire à négocier</span>
+    <button type="button" class="btn-save" id="btn-save">☆ Sauvegarder</button>
+    <button type="button" class="btn-apply-big" id="btn-apply">Postuler</button>
+  </div>
+
+  <a href="#" id="contact-link" class="btn-save" style="display:block; text-align:center; text-decoration:none; margin-top:10px;">💬 Contacter le recruteur</a>
+
+  <div class="confirm-box" id="confirm-box">
+    ✅ Votre candidature a été envoyée avec succès.
+  </div>
+
+</main>
+
+<footer>© 2026 Job Univers — Tous droits réservés</footer>
+
+<script>
+  /* ---------- Lecture des paramètres d'URL ---------- */
+  const params = new URLSearchParams(window.location.search);
+
+  const data = {
+    title: params.get('title') || "Offre d'emploi",
+    company: params.get('company') || "Entreprise non précisée",
+    location: params.get('location') || "Non précisé",
+    contract: params.get('contract') || "Non précisé",
+    date: params.get('date') || "Récemment",
+    tag: params.get('tag') || "Général",
+    color: params.get('color') || "#2E7D6B",
+    salary: params.get('salary') || "Salaire à négocier",
+    description: params.get('description') || ""
+  };
+
+  document.title = `${data.title} — Job Univers`;
+  document.getElementById('job-header').style.setProperty('--cat-color', data.color);
+  document.getElementById('job-tag').textContent = data.tag;
+  document.getElementById('job-title').textContent = data.title;
+  document.getElementById('job-company').textContent = data.company;
+  document.getElementById('job-location').textContent = data.location;
+  document.getElementById('job-contract').textContent = data.contract;
+  document.getElementById('job-date').textContent = data.date;
+  document.getElementById('job-sector').textContent = data.tag;
+  document.getElementById('job-salary').textContent = data.salary;
+  if (data.description) {
+    document.getElementById('job-description').textContent = data.description;
+  }
+
+  /* ---------- Lien vers la messagerie (e-mail recruteur généré à partir de l'entreprise) ---------- */
+  const recruiterEmail = data.company.toLowerCase().replace(/[^a-z0-9]/g, '') + '@recruteur.jobunivers.com';
+  document.getElementById('contact-link').href = `messages.html?with=${encodeURIComponent(recruiterEmail)}`;
+
+  /* ---------- Boutons ---------- */
+  document.getElementById('btn-apply').addEventListener('click', () => {
+    document.getElementById('confirm-box').classList.add('show');
+    document.getElementById('btn-apply').textContent = "Candidature envoyée ✓";
+    document.getElementById('btn-apply').disabled = true;
+  });
+
+  document.getElementById('btn-save').addEventListener('click', function () {
+    const saved = this.textContent.includes('★');
+    this.textContent = saved ? '☆ Sauvegarder' : '★ Sauvegardé';
+  });
+</script>
+
+</body>
+</html>
+
