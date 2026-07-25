@@ -1,0 +1,253 @@
+	<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publier une offre — Job Univers</title>
+<style>
+  :root{
+    --navy:#0F1B2D;
+    --navy-light:#16273E;
+    --cream:#F7F5F1;
+    --gold:#E8A33D;
+    --teal:#2E7D6B;
+    --ink:#1A1F26;
+    --ink-soft:#5B6470;
+    --line:#E4E1D9;
+    --white:#FFFFFF;
+    --danger:#C4432E;
+    --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,.brand{font-family:'Sora', sans-serif;}
+  a{color:inherit; text-decoration:none;}
+
+  .topbar{
+    background:var(--navy); color:var(--white);
+    padding:16px 20px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-size:1.02rem; font-weight:700;}
+  .brand-mark{
+    width:30px; height:30px; border-radius:8px;
+    background:linear-gradient(135deg, var(--gold), var(--teal));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Sora', sans-serif; font-weight:800; color:var(--navy); font-size:0.85rem;
+  }
+  .back-link{font-size:0.8rem; color:rgba(255,255,255,0.75);}
+
+  .wrap{max-width:520px; margin:0 auto; padding:28px 20px 50px;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem;
+    color:var(--gold); text-transform:uppercase; letter-spacing:0.1em;
+    margin-bottom:10px;
+  }
+  .eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--gold);}
+  h1.title{font-size:1.5rem; font-weight:800; margin-bottom:6px;}
+  p.subtitle{color:var(--ink-soft); font-size:0.9rem; margin-bottom:24px;}
+
+  .card{
+    background:var(--white); border:1px solid var(--line);
+    border-radius:var(--radius); padding:24px 20px;
+  }
+  .field-group{margin-bottom:16px;}
+  label{display:block; font-size:0.78rem; font-weight:600; margin-bottom:7px;}
+  .field, select.field-select{
+    display:flex; align-items:center; gap:10px;
+    border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
+  }
+  .field:focus-within{border-color:var(--navy);}
+  .field input, .field textarea{
+    border:none; outline:none; font-family:'Inter'; font-size:0.94rem;
+    width:100%; background:transparent; color:var(--ink); resize:vertical;
+  }
+  .field input::placeholder, .field textarea::placeholder{color:#9AA1AB;}
+  select.field-select{
+    width:100%; font-family:'Inter'; font-size:0.94rem; background:var(--white); color:var(--ink);
+  }
+
+  .row-2{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+
+  .btn-primary{
+    width:100%; background:var(--navy); color:var(--white);
+    border:none; border-radius:10px; padding:14px;
+    font-family:'Sora'; font-weight:700; font-size:0.95rem;
+    cursor:pointer; margin-top:6px;
+  }
+  .btn-primary:hover{background:var(--navy-light);}
+  .btn-primary:disabled{opacity:0.6; cursor:default;}
+
+  .msg{font-size:0.84rem; padding:12px 14px; border-radius:8px; margin-bottom:16px; text-align:center;}
+  .msg.error{background:#FBEAE7; color:var(--danger);}
+  .msg.success{background:#E4F3E9; color:#22823F;}
+  [hidden]{display:none !important;}
+
+  footer{
+    text-align:center; padding:24px 20px; font-family:'IBM Plex Mono';
+    font-size:0.72rem; color:#A6ACB5;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="brand-mark">JU</span>Job Univers</div>
+  <a href="index.html" class="back-link">← Accueil</a>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow">Espace recruteur</div>
+  <h1 class="title">Publier une offre</h1>
+  <p class="subtitle">Remplissez les informations ci-dessous. Votre offre sera vérifiée sous 24h avant mise en ligne.</p>
+
+  <div class="card">
+    <div id="msg-box"></div>
+
+    <form id="job-form">
+      <div class="field-group">
+        <label for="recruiter-email">Votre e-mail (recruteur)</label>
+        <div class="field">
+          <input type="email" id="recruiter-email" placeholder="rh@entreprise.com" required>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="title">Intitulé du poste</label>
+        <div class="field">
+          <input type="text" id="title" placeholder="Ex : Agent HSE" required>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="company">Entreprise</label>
+        <div class="field">
+          <input type="text" id="company" placeholder="Nom de l'entreprise" required>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div class="field-group">
+          <label for="location">Lieu</label>
+          <div class="field">
+            <input type="text" id="location" placeholder="Pays / ville">
+          </div>
+        </div>
+        <div class="field-group">
+          <label for="contract">Contrat</label>
+          <select id="contract" class="field-select">
+            <option value="CDI">CDI</option>
+            <option value="CDD">CDD</option>
+            <option value="Stage">Stage</option>
+            <option value="Freelance">Freelance</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="tag">Secteur</label>
+        <select id="tag" class="field-select">
+          <option value="HSE">HSE / QHSE</option>
+          <option value="Informatique">Informatique</option>
+          <option value="Logistique">Logistique</option>
+          <option value="Mines">Mines / Industrie</option>
+          <option value="Général">Autre</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="salary">Salaire (optionnel)</label>
+        <div class="field">
+          <input type="text" id="salary" placeholder="Ex : 3 000 - 4 000 € / mois">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="description">Description du poste</label>
+        <div class="field">
+          <textarea id="description" rows="4" placeholder="Missions, profil recherché..."></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary" id="submit-btn">Publier l'offre</button>
+    </form>
+  </div>
+</div>
+
+<footer>© 2026 Job Univers — Tous droits réservés</footer>
+
+<script>
+  const API_BASE = "http://localhost:3002";
+
+  const form = document.getElementById('job-form');
+  const msgBox = document.getElementById('msg-box');
+  const submitBtn = document.getElementById('submit-btn');
+
+  // Pré-remplit l'e-mail si un recruteur est déjà inscrit
+  const savedRecruiter = JSON.parse(localStorage.getItem('ju_recruiter') || 'null');
+  if (savedRecruiter && savedRecruiter.email) {
+    document.getElementById('recruiter-email').value = savedRecruiter.email;
+  }
+  if (savedRecruiter && savedRecruiter.company) {
+    document.getElementById('company').value = savedRecruiter.company;
+  }
+
+  function showMsg(text, type) {
+    msgBox.innerHTML = `<div class="msg ${type}">${text}</div>`;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msgBox.innerHTML = '';
+
+    const payload = {
+      recruiterEmail: document.getElementById('recruiter-email').value.trim(),
+      title: document.getElementById('title').value.trim(),
+      company: document.getElementById('company').value.trim(),
+      location: document.getElementById('location').value.trim(),
+      contract: document.getElementById('contract').value,
+      tag: document.getElementById('tag').value,
+      salary: document.getElementById('salary').value.trim(),
+      description: document.getElementById('description').value.trim()
+    };
+
+    if (!payload.recruiterEmail || !payload.title || !payload.company) {
+      showMsg("Merci de remplir au moins l'e-mail, le titre et l'entreprise.", 'error');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Publication...";
+
+    try {
+      const res = await fetch(`${API_BASE}/jobs`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        showMsg("✅ Offre publiée avec succès ! Elle apparaît maintenant sur la page d'accueil.", 'success');
+        form.reset();
+        document.getElementById('recruiter-email').value = payload.recruiterEmail;
+      } else {
+        showMsg(data.error || "Échec de la publication.", 'error');
+      }
+    } catch (err) {
+      showMsg("Impossible de contacter le serveur des offres. Vérifiez qu'il est bien lancé.", 'error');
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Publier l'offre";
+  });
+</script>
+
+</body>
+</html>
+

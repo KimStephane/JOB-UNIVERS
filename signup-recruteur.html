@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Créer un compte recruteur — Job Univers</title>
+<style>
+  :root{
+    --navy:#0F1B2D;
+    --navy-light:#16273E;
+    --cream:#F7F5F1;
+    --gold:#E8A33D;
+    --teal:#2E7D6B;
+    --ink:#1A1F26;
+    --ink-soft:#5B6470;
+    --line:#E4E1D9;
+    --white:#FFFFFF;
+    --danger:#C4432E;
+    --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,.brand{font-family:'Sora', sans-serif;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit; text-decoration:none;}
+
+  .topbar{
+    background:var(--navy); color:var(--white);
+    padding:18px 24px; display:flex; align-items:center; justify-content:center;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-size:1.05rem; font-weight:700;}
+  .brand-mark{
+    width:30px; height:30px; border-radius:8px;
+    background:linear-gradient(135deg, var(--gold), var(--teal));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Sora', sans-serif; font-weight:800; color:var(--navy); font-size:0.85rem;
+  }
+
+  .wrap{max-width:440px; margin:0 auto; padding:36px 20px 60px;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem;
+    color:var(--gold); text-transform:uppercase; letter-spacing:0.1em;
+    margin-bottom:10px;
+  }
+  .eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--gold);}
+  h1.title{font-size:1.7rem; font-weight:800; margin-bottom:6px;}
+  p.subtitle{color:var(--ink-soft); font-size:0.92rem; margin-bottom:26px;}
+
+  .steps{display:flex; gap:8px; margin-bottom:24px;}
+  .step-dot{flex:1; height:4px; border-radius:100px; background:var(--line);}
+  .step-dot.active{background:var(--navy);}
+
+  .card{
+    background:var(--white); border:1px solid var(--line);
+    border-radius:var(--radius); padding:26px 22px;
+    box-shadow:0 16px 32px -14px rgba(15,27,45,0.14);
+  }
+  .field-group{margin-bottom:16px;}
+  label{display:block; font-size:0.78rem; font-weight:600; margin-bottom:7px;}
+  .field{
+    display:flex; align-items:center; gap:10px;
+    border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
+  }
+  .field:focus-within{border-color:var(--navy);}
+  .field input{
+    border:none; outline:none; font-family:'Inter'; font-size:0.94rem;
+    width:100%; background:transparent; color:var(--ink);
+  }
+  .field input::placeholder{color:#9AA1AB;}
+
+  .info-note{
+    display:flex; gap:10px; align-items:flex-start;
+    background:color-mix(in srgb, var(--gold) 12%, white);
+    border:1px solid color-mix(in srgb, var(--gold) 35%, white);
+    border-radius:10px; padding:12px 14px; margin-bottom:20px;
+    font-size:0.8rem; color:#8A5A16; line-height:1.4;
+  }
+
+  .btn-primary{
+    width:100%; background:var(--navy); color:var(--white);
+    border:none; border-radius:10px; padding:14px;
+    font-family:'Sora'; font-weight:700; font-size:0.95rem;
+    cursor:pointer; margin-top:4px;
+  }
+  .btn-primary:hover{background:var(--navy-light);}
+  .btn-primary:disabled{opacity:0.6; cursor:default;}
+
+  .btn-link{
+    display:block; text-align:center; margin-top:14px;
+    font-size:0.82rem; color:var(--ink-soft); background:none; border:none; cursor:pointer;
+  }
+
+  .code-inputs{display:flex; gap:8px; justify-content:center; margin-bottom:6px;}
+  .code-inputs input{
+    width:42px; height:52px; text-align:center; font-size:1.3rem; font-weight:700;
+    border:1.5px solid var(--line); border-radius:10px; font-family:'IBM Plex Mono';
+  }
+  .code-inputs input:focus{border-color:var(--navy); outline:none;}
+
+  .msg{
+    font-size:0.82rem; padding:10px 12px; border-radius:8px; margin-bottom:14px; text-align:center;
+  }
+  .msg.error{background:#FBEAE7; color:var(--danger);}
+  .msg.success{background:#E4F3E9; color:#22823F;}
+  [hidden]{display:none !important;}
+
+  .switch-link{text-align:center; font-size:0.86rem; color:var(--ink-soft); margin-top:20px;}
+  .switch-link a{color:var(--navy); font-weight:600;}
+
+  footer{
+    text-align:center; padding:24px 20px; font-family:'IBM Plex Mono';
+    font-size:0.72rem; color:#A6ACB5;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="brand-mark">JU</span>Job Univers</div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow">Espace recruteur</div>
+  <h1 class="title">Créer un compte entreprise</h1>
+  <p class="subtitle">Publiez vos offres et échangez directement avec les candidats.</p>
+
+  <div class="steps">
+    <div class="step-dot active" id="dot-1"></div>
+    <div class="step-dot" id="dot-2"></div>
+  </div>
+
+  <div class="card">
+
+    <!-- ---------- ÉTAPE 1 ---------- -->
+    <form id="step1-form">
+      <div id="msg-1"></div>
+
+      <div class="info-note">
+        Vos offres publiées seront vérifiées manuellement sous 24h avant mise en ligne.
+      </div>
+
+      <div class="field-group">
+        <label for="company">Nom de l'entreprise</label>
+        <div class="field">
+          <input type="text" id="company" placeholder="Ex : Mines de Côte d'Ivoire" required>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="contact-name">Nom du contact RH</label>
+        <div class="field">
+          <input type="text" id="contact-name" placeholder="Votre nom" required>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="email">Adresse e-mail professionnelle</label>
+        <div class="field">
+          <input type="email" id="email" placeholder="rh@entreprise.com" required>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="password">Mot de passe</label>
+        <div class="field">
+          <input type="password" id="password" placeholder="8 caractères minimum" required minlength="8">
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary" id="send-btn">Recevoir le code par e-mail</button>
+    </form>
+
+    <!-- ---------- ÉTAPE 2 ---------- -->
+    <form id="step2-form" hidden>
+      <div id="msg-2"></div>
+      <p style="font-size:0.86rem; color:var(--ink-soft); text-align:center; margin-bottom:16px;">
+        Entrez le code à 6 chiffres envoyé à <strong id="email-display"></strong>
+      </p>
+
+      <div class="code-inputs">
+        <input type="text" maxlength="1" inputmode="numeric">
+        <input type="text" maxlength="1" inputmode="numeric">
+        <input type="text" maxlength="1" inputmode="numeric">
+        <input type="text" maxlength="1" inputmode="numeric">
+        <input type="text" maxlength="1" inputmode="numeric">
+        <input type="text" maxlength="1" inputmode="numeric">
+      </div>
+
+      <button type="submit" class="btn-primary" id="verify-btn">Valider mon compte</button>
+      <button type="button" class="btn-link" id="resend-btn">Renvoyer le code</button>
+    </form>
+
+  </div>
+
+  <p class="switch-link">Déjà inscrit ? <a href="login.html">Se connecter</a></p>
+</div>
+
+<footer>© 2026 Job Univers — Tous droits réservés</footer>
+
+<script>
+  /* ⚠️ Fonctionne en local uniquement pour l'instant (localhost) */
+  const API_BASE = "http://localhost:3000";
+
+  const step1Form = document.getElementById('step1-form');
+  const step2Form = document.getElementById('step2-form');
+  const msg1 = document.getElementById('msg-1');
+  const msg2 = document.getElementById('msg-2');
+  const sendBtn = document.getElementById('send-btn');
+  const verifyBtn = document.getElementById('verify-btn');
+  const resendBtn = document.getElementById('resend-btn');
+
+  let userEmail = "";
+  let companyName = "";
+  let contactName = "";
+
+  function showMsg(el, text, type) {
+    el.innerHTML = `<div class="msg ${type}">${text}</div>`;
+  }
+  function clearMsg(el) { el.innerHTML = ""; }
+
+  /* ---------- Étape 1 : envoi du code ---------- */
+  step1Form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearMsg(msg1);
+
+    const company = document.getElementById('company').value.trim();
+    const contact = document.getElementById('contact-name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    if (!company || !contact || !email || password.length < 8) {
+      showMsg(msg1, "Merci de remplir tous les champs (mot de passe : 8 caractères min.).", 'error');
+      return;
+    }
+
+    sendBtn.disabled = true;
+    sendBtn.textContent = "Envoi en cours...";
+
+    try {
+      const res = await fetch(`${API_BASE}/send-code`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        userEmail = email;
+        companyName = company;
+        contactName = contact;
+        document.getElementById('email-display').textContent = email;
+        step1Form.hidden = true;
+        step2Form.hidden = false;
+        document.getElementById('dot-1').classList.remove('active');
+        document.getElementById('dot-2').classList.add('active');
+        step2Form.querySelector('input').focus();
+      } else {
+        showMsg(msg1, data.error || "Échec de l'envoi du code.", 'error');
+      }
+    } catch (err) {
+      showMsg(msg1, "Impossible de contacter le serveur de validation. Vérifiez qu'il est bien lancé.", 'error');
+    }
+
+    sendBtn.disabled = false;
+    sendBtn.textContent = "Recevoir le code par e-mail";
+  });
+
+  /* ---------- Navigation automatique entre les cases du code ---------- */
+  const codeInputs = document.querySelectorAll('.code-inputs input');
+  codeInputs.forEach((input, i) => {
+    input.addEventListener('input', () => {
+      if (input.value && i < codeInputs.length - 1) codeInputs[i + 1].focus();
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !input.value && i > 0) codeInputs[i - 1].focus();
+    });
+  });
+
+  /* ---------- Étape 2 : vérification du code ---------- */
+  step2Form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearMsg(msg2);
+
+    const code = Array.from(codeInputs).map(i => i.value).join('');
+    if (code.length !== 6) {
+      showMsg(msg2, "Merci d'entrer les 6 chiffres du code.", 'error');
+      return;
+    }
+
+    verifyBtn.disabled = true;
+    verifyBtn.textContent = "Vérification...";
+
+    try {
+      const res = await fetch(`${API_BASE}/verify-code`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: userEmail, code })
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        localStorage.setItem('ju_recruiter', JSON.stringify({
+          company: companyName, contact: contactName, email: userEmail
+        }));
+        showMsg(msg2, "✅ Compte recruteur validé ! Redirection...", 'success');
+        setTimeout(() => window.location.href = 'login.html', 1200);
+      } else {
+        showMsg(msg2, data.error || "Code incorrect.", 'error');
+      }
+    } catch (err) {
+      showMsg(msg2, "Impossible de contacter le serveur de validation.", 'error');
+    }
+
+    verifyBtn.disabled = false;
+    verifyBtn.textContent = "Valider mon compte";
+  });
+
+  /* ---------- Renvoyer le code ---------- */
+  resendBtn.addEventListener('click', async () => {
+    resendBtn.textContent = "Envoi...";
+    try {
+      await fetch(`${API_BASE}/send-code`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: userEmail })
+      });
+      showMsg(msg2, "Nouveau code envoyé.", 'success');
+    } catch (err) {
+      showMsg(msg2, "Échec de l'envoi.", 'error');
+    }
+    resendBtn.textContent = "Renvoyer le code";
+  });
+</script>
+
+</body>
+</html>
+

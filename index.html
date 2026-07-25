@@ -203,7 +203,7 @@
       <span class="brand-mark">JU</span>
       Job Univers
     </div>
-    <a href="#" class="nav-cta">Publier une offre</a>
+<a href="publish-job.html" class="nav-cta">Publier une offre</a>
   </div>
 
   <div class="eyebrow">Plateforme internationale de recrutement</div>
@@ -283,7 +283,46 @@
   <div class="brand"><span class="brand-mark" style="width:26px;height:26px;font-size:0.75rem;">JU</span>Job Univers</div>
   © 2026 Job Univers — Tous droits réservés
 </footer>
+<script>
+  const JOBS_API = "http://localhost:3002";
+  const jobColors = { HSE: '#2E7D6B', Informatique: '#2E5FE8', Logistique: '#E8A33D', Mines: '#8A5A16', 'Général': '#5B6470' };
 
+  fetch(`${JOBS_API}/jobs`).then(r => r.json()).then(data => {
+    const jobList = document.querySelector('.job-list');
+    if (!jobList || !data.jobs || data.jobs.length === 0) return;
+
+    data.jobs.forEach(job => {
+      const color = jobColors[job.tag] || '#5B6470';
+      const dateStr = new Date(job.createdAt).toLocaleDateString('fr-FR');
+      const params = new URLSearchParams({
+        title: job.title, company: job.company, location: job.location,
+        contract: job.contract, tag: job.tag, color, salary: job.salary,
+        description: job.description, date: dateStr
+      });
+
+      const card = document.createElement('div');
+      card.className = 'job-card';
+      card.style.setProperty('--cat-color', color);
+      card.innerHTML = `
+        <div class="job-top">
+          <span class="job-tag">${job.tag}</span>
+          <span class="job-date">Publié le ${dateStr}</span>
+        </div>
+        <div class="job-title">${job.title}</div>
+        <div class="job-meta">
+          <span>${job.company}</span>
+          <span>${job.location}</span>
+          <span>${job.contract}</span>
+        </div>
+        <div class="job-bottom">
+          <span class="job-salary">${job.salary}</span>
+          <a href="job-detail.html?${params.toString()}" class="btn-apply" style="display:inline-block;text-decoration:none;">Voir l'offre</a>
+        </div>
+      `;
+      jobList.prepend(card);
+    });
+  }).catch(() => {});
+</script>
 </body>
 </html>
 
