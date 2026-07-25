@@ -235,10 +235,12 @@
      Données de démonstration — à remplacer par de vraies
      données (base de données / API) quand le backend existera.
      ========================================================== */
+  const savedProfile = JSON.parse(localStorage.getItem('ju_candidate') || 'null');
+
   const candidate = {
-    name: "",              // ex: "Junior Bakayoko"
+    name: savedProfile ? savedProfile.name : "",
     role: "",               // ex: "Agent QHSE"
-    completeness: 0          // 0 à 100
+    completeness: savedProfile ? 40 : 0   // 40% dès que le compte est créé
   };
 
   const applications = [
