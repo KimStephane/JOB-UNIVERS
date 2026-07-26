@@ -17,14 +17,12 @@ Available on:
   http://127.0.0.1:8081
 Hit CTRL-C to stop the server
 
-[2026-07-26T15:48:55.953Z]  "GET /" "curl/8.21.0"
-[2026-07-26T15:50:53.855Z]  "GET /publish-job.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-26T15:59:09.083Z]  "GET /login.html?v=2" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-26T15:59:27.158Z]  "GET /dashboard-recruteur.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-26T15:59:27.196Z]  "GET /dashboard-recruteur.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-26T16:11:32.889Z]  "GET /publish-job.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-26T16:11:49.538Z]  "GET /dashboard.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-26T16:12:12.624Z]  "GET /publish-job.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-26T16:12:12.636Z]  "GET /publish-job.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-26T16:13:03.282Z]  "GET /publish-job.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-26T16:13:03.302Z]  "GET /publish-job.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-26T20:22:41.246Z]  "GET /" "curl/8.21.0"
+[2026-07-26T20:23:47.662Z]  "GET /login.html?v=2" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-26T20:23:47.832Z]  "GET /chatbot.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-26T20:23:47.976Z]  "GET /favicon.ico" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-26T20:23:47.982Z]  "GET /favicon.ico" Error (404): "Not found"
+[2026-07-26T20:23:53.227Z]  "GET /signup.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-26T20:25:32.962Z]  "GET /dashboard.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-26T20:25:33.062Z]  "GET /photo-editor.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-26T20:26:26.317Z]  "GET /index.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
