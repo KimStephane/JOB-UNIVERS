@@ -164,7 +164,14 @@
   </div>
 </div>
 
-<div class="welcome">
+<div id="cover-banner" onclick="document.getElementById('cover-input').click()"
+  style="height:110px; background:linear-gradient(135deg, var(--navy), var(--navy-light)); cursor:pointer;
+  background-size:cover; background-position:center; position:relative;">
+  <span style="position:absolute; bottom:8px; right:12px; font-size:0.68rem; color:rgba(255,255,255,0.7); font-family:'IBM Plex Mono';">📷 Modifier la couverture</span>
+</div>
+<input type="file" id="cover-input" accept="image/*" hidden>
+
+<div class="welcome" style="padding-top:14px;">
   <div class="welcome-name" id="candidate-name">Bonjour 👋</div>
   <div class="welcome-sub">Voici un aperçu de votre activité sur Job Univers.</div>
 </div>
@@ -192,7 +199,8 @@
       <a href="#" class="link-small">Modifier</a>
     </div>
     <div class="profile-card">
-      <div class="avatar" id="avatar-initials">--</div>
+      <div class="avatar" id="avatar-initials" onclick="document.getElementById('photo-input').click()" style="cursor:pointer; background-size:cover; background-position:center;">--</div>
+      <input type="file" id="photo-input" accept="image/*" hidden>
       <div class="profile-info">
         <div class="name" id="profile-name">Complétez votre profil</div>
         <div class="role" id="profile-role">Aucun métier renseigné</div>
@@ -270,6 +278,48 @@
     : '--';
   document.getElementById('avatar-initials').textContent = initials;
 
+  /* ---------- Photo de profil ---------- */
+  const avatarEl = document.getElementById('avatar-initials');
+  const photoInput = document.getElementById('photo-input');
+
+  if (savedProfile && savedProfile.photo) {
+    avatarEl.style.backgroundImage = `url(${savedProfile.photo})`;
+    avatarEl.textContent = '';
+  }
+
+  photoInput.addEventListener('change', () => {
+    const file = photoInput.files[0];
+    if (!file) return;
+    openCropModal(file, 'circle', 300, 300, (croppedDataUrl) => {
+      avatarEl.style.backgroundImage = `url(${croppedDataUrl})`;
+      avatarEl.textContent = '';
+      const current = JSON.parse(localStorage.getItem('ju_candidate') || '{}');
+      current.photo = croppedDataUrl;
+      localStorage.setItem('ju_candidate', JSON.stringify(current));
+    });
+    photoInput.value = '';
+  });
+
+  /* ---------- Photo de couverture ---------- */
+  const coverEl = document.getElementById('cover-banner');
+  const coverInput = document.getElementById('cover-input');
+
+  if (savedProfile && savedProfile.cover) {
+    coverEl.style.backgroundImage = `url(${savedProfile.cover})`;
+  }
+
+  coverInput.addEventListener('change', () => {
+    const file = coverInput.files[0];
+    if (!file) return;
+    openCropModal(file, 'rect', 1200, 400, (croppedDataUrl) => {
+      coverEl.style.backgroundImage = `url(${croppedDataUrl})`;
+      const current = JSON.parse(localStorage.getItem('ju_candidate') || '{}');
+      current.cover = croppedDataUrl;
+      localStorage.setItem('ju_candidate', JSON.stringify(current));
+    });
+    coverInput.value = '';
+  });
+
   /* ---------- Rendu des candidatures ---------- */
   const statusLabels = {
     pending: "En attente",
@@ -327,6 +377,8 @@
   document.getElementById('stat-interview').textContent =
     applications.filter(a => a.status === 'interview').length;
 </script>
+
+<script src="photo-editor.js"></script>
 
 </body>
 </html>

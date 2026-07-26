@@ -108,9 +108,53 @@
   </div>
 </div>
 
-<div class="welcome">
-  <div class="welcome-name" id="company-name">Espace recruteur</div>
-  <div class="welcome-sub">Gérez vos offres et suivez vos candidatures.</div>
+<div id="cover-banner" onclick="document.getElementById('cover-input').click()"
+  style="height:110px; background:linear-gradient(135deg, var(--navy), var(--navy-light)); cursor:pointer;
+  background-size:cover; background-position:center; position:relative;">
+  <span style="position:absolute; bottom:8px; right:12px; font-size:0.68rem; color:rgba(255,255,255,0.7); font-family:'IBM Plex Mono';">📷 Modifier la couverture</span>
+</div>
+<input type="file" id="cover-input" accept="image/*" hidden>
+
+<div class="welcome" style="padding-top:14px;">
+  <div style="display:flex; align-items:center; gap:12px;">
+    <div id="company-avatar" onclick="document.getElementById('photo-input').click()"
+      style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#E8A33D,#2E7D6B);
+      display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;
+      color:#0F1B2D;font-size:1rem;cursor:pointer;background-size:cover;background-position:center;flex-shrink:0;">JU</div>
+    <input type="file" id="photo-input" accept="image/*" hidden>
+    <div>
+      <div class="welcome-name" id="company-name">Espace recruteur <span id="verified-badge-icon" hidden style="font-size:0.85rem; background:var(--gold); color:var(--navy); padding:2px 8px; border-radius:100px; margin-left:6px; vertical-align:middle;">✔ Vérifié</span></div>
+      <div class="welcome-sub">Gérez vos offres et suivez vos candidatures.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ---------- MODALE DE PAIEMENT (démo) ---------- -->
+<div id="payment-modal" hidden style="position:fixed; inset:0; background:rgba(15,27,45,0.6); display:flex; align-items:center; justify-content:center; z-index:999; padding:20px;">
+  <div style="background:var(--white); border-radius:14px; padding:24px; max-width:380px; width:100%;">
+    <h2 style="font-size:1.1rem; margin-bottom:6px; font-family:'Sora',sans-serif;">Certifier mon entreprise</h2>
+    <p style="font-size:0.85rem; color:var(--ink-soft); margin-bottom:18px;">5€ / mois — paiement sécurisé (démo)</p>
+
+    <div style="margin-bottom:12px;">
+      <label style="display:block; font-size:0.78rem; font-weight:600; margin-bottom:6px;">Numéro de carte</label>
+      <input type="text" placeholder="4242 4242 4242 4242" maxlength="19" style="width:100%; border:1.5px solid var(--line); border-radius:9px; padding:11px 13px; font-size:0.92rem;">
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+      <div>
+        <label style="display:block; font-size:0.78rem; font-weight:600; margin-bottom:6px;">Expiration</label>
+        <input type="text" placeholder="MM/AA" maxlength="5" style="width:100%; border:1.5px solid var(--line); border-radius:9px; padding:11px 13px; font-size:0.92rem;">
+      </div>
+      <div>
+        <label style="display:block; font-size:0.78rem; font-weight:600; margin-bottom:6px;">CVC</label>
+        <input type="text" placeholder="123" maxlength="3" style="width:100%; border:1.5px solid var(--line); border-radius:9px; padding:11px 13px; font-size:0.92rem;">
+      </div>
+    </div>
+
+    <p style="font-size:0.72rem; color:#A6ACB5; margin-bottom:14px;">⚠️ Démo — aucun paiement réel n'est effectué pour l'instant.</p>
+
+    <button type="button" id="confirm-payment-btn" style="width:100%; background:var(--navy); color:var(--white); border:none; border-radius:10px; padding:13px; font-family:'Sora',sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; margin-bottom:8px;">Confirmer le paiement (démo)</button>
+    <button type="button" id="cancel-payment-btn" style="width:100%; background:none; border:none; color:var(--ink-soft); font-size:0.84rem; cursor:pointer; padding:8px;">Annuler</button>
+  </div>
 </div>
 
 <div class="stat-row">
@@ -129,6 +173,14 @@
 </div>
 
 <main>
+
+  <div class="publish-cta" id="verify-cta" style="background:var(--white); border:1px solid var(--line); color:var(--ink);">
+    <div>
+      <h3 style="color:var(--ink);">Certifier mon entreprise</h3>
+      <p style="color:var(--ink-soft);">Un badge « Vérifié » rassure les candidats — 5€/mois</p>
+    </div>
+    <button type="button" class="btn-publish" id="open-payment-btn" style="background:var(--navy); color:var(--white);">Certifier</button>
+  </div>
 
   <div class="publish-cta">
     <div>
@@ -160,8 +212,66 @@
 
   const savedRecruiter = JSON.parse(localStorage.getItem('ju_recruiter') || 'null');
   if (savedRecruiter) {
-    document.getElementById('company-name').textContent = savedRecruiter.company || "Espace recruteur";
+    document.getElementById('company-name').childNodes[0].textContent = savedRecruiter.company || "Espace recruteur";
+    if (savedRecruiter.logo) {
+      const avatar = document.getElementById('company-avatar');
+      avatar.style.backgroundImage = `url(${savedRecruiter.logo})`;
+      avatar.textContent = '';
+    }
+    if (savedRecruiter.verified) {
+      document.getElementById('verified-badge-icon').hidden = false;
+      document.getElementById('verify-cta').hidden = true;
+    }
   }
+
+  document.getElementById('open-payment-btn').addEventListener('click', () => {
+    document.getElementById('payment-modal').hidden = false;
+  });
+  document.getElementById('cancel-payment-btn').addEventListener('click', () => {
+    document.getElementById('payment-modal').hidden = true;
+  });
+  document.getElementById('confirm-payment-btn').addEventListener('click', () => {
+    document.getElementById('payment-modal').hidden = true;
+    const current = JSON.parse(localStorage.getItem('ju_recruiter') || '{}');
+    current.verified = true;
+    localStorage.setItem('ju_recruiter', JSON.stringify(current));
+    document.getElementById('verified-badge-icon').hidden = false;
+    document.getElementById('verify-cta').hidden = true;
+  });
+
+  document.getElementById('photo-input').addEventListener('change', function () {
+    const file = this.files[0];
+    if (!file) return;
+    openCropModal(file, 'circle', 300, 300, (croppedDataUrl) => {
+      const avatar = document.getElementById('company-avatar');
+      avatar.style.backgroundImage = `url(${croppedDataUrl})`;
+      avatar.textContent = '';
+      const current = JSON.parse(localStorage.getItem('ju_recruiter') || '{}');
+      current.logo = croppedDataUrl;
+      localStorage.setItem('ju_recruiter', JSON.stringify(current));
+    });
+    this.value = '';
+  });
+
+  /* ---------- Photo de couverture ---------- */
+  const coverEl = document.getElementById('cover-banner');
+  const coverInput = document.getElementById('cover-input');
+
+  if (savedRecruiter && savedRecruiter.cover) {
+    coverEl.style.backgroundImage = `url(${savedRecruiter.cover})`;
+  }
+
+  coverInput.addEventListener('change', () => {
+    const file = coverInput.files[0];
+    if (!file) return;
+    openCropModal(file, 'rect', 1200, 400, (croppedDataUrl) => {
+      coverEl.style.backgroundImage = `url(${croppedDataUrl})`;
+      const current = JSON.parse(localStorage.getItem('ju_recruiter') || '{}');
+      current.cover = croppedDataUrl;
+      localStorage.setItem('ju_recruiter', JSON.stringify(current));
+    });
+    coverInput.value = '';
+  });
 
   const recruiterEmail = (savedRecruiter && savedRecruiter.email) || '';
 
@@ -216,6 +326,8 @@
 
   loadJobs();
 </script>
+
+<script src="photo-editor.js"></script>
 
 </body>
 </html>
