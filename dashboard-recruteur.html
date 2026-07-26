@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espace recruteur — Job Univers</title>
+<style>
+  :root{
+    --navy:#0F1B2D;
+    --navy-light:#16273E;
+    --cream:#F7F5F1;
+    --gold:#E8A33D;
+    --teal:#2E7D6B;
+    --ink:#1A1F26;
+    --ink-soft:#5B6470;
+    --line:#E4E1D9;
+    --white:#FFFFFF;
+    --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.brand{font-family:'Sora', sans-serif;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit; text-decoration:none;}
+
+  .topbar{
+    background:var(--navy); color:var(--white);
+    padding:16px 20px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-size:1.02rem; font-weight:700;}
+  .brand-mark{
+    width:30px; height:30px; border-radius:8px;
+    background:linear-gradient(135deg, var(--gold), var(--teal));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Sora', sans-serif; font-weight:800; color:var(--navy); font-size:0.85rem;
+  }
+  .topbar-actions{display:flex; align-items:center; gap:14px;}
+  .icon-btn{background:none; border:none; color:rgba(255,255,255,0.75); font-size:1rem;}
+  .logout-link{font-size:0.8rem; color:rgba(255,255,255,0.75); border:1px solid rgba(255,255,255,0.25); padding:6px 12px; border-radius:100px;}
+
+  .welcome{background:var(--navy); color:var(--white); padding:6px 20px 28px;}
+  .welcome-name{font-size:1.3rem; font-weight:800; margin-bottom:4px;}
+  .welcome-sub{font-size:0.86rem; color:rgba(255,255,255,0.6);}
+
+  .stat-row{display:flex; gap:10px; margin:-20px 16px 0; position:relative; z-index:2;}
+  .stat-card{
+    flex:1; background:var(--white); border-radius:12px; padding:14px 12px;
+    box-shadow:0 12px 24px -10px rgba(15,27,45,0.18); text-align:center;
+  }
+  .stat-card .num{font-family:'Sora'; font-size:1.3rem; font-weight:800; color:var(--navy);}
+  .stat-card .lbl{font-family:'IBM Plex Mono'; font-size:0.62rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;}
+
+  main{max-width:640px; margin:0 auto; padding:32px 20px 40px;}
+
+  .publish-cta{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    background:var(--navy); color:var(--white); border-radius:var(--radius);
+    padding:18px 20px; margin-bottom:28px;
+  }
+  .publish-cta div h3{font-size:0.98rem; margin-bottom:2px;}
+  .publish-cta div p{font-size:0.78rem; color:rgba(255,255,255,0.6);}
+  .btn-publish{
+    background:var(--gold); color:var(--navy); border:none; border-radius:9px;
+    padding:10px 16px; font-family:'Sora'; font-weight:700; font-size:0.84rem;
+    white-space:nowrap; flex-shrink:0;
+  }
+
+  .section{margin-bottom:28px;}
+  .section-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+  .section-head h2{font-size:1.05rem; font-weight:700;}
+
+  .job-row{
+    background:var(--white); border:1px solid var(--line); border-radius:12px;
+    padding:16px; margin-bottom:12px;
+  }
+  .job-row-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:6px;}
+  .job-row-title{font-weight:700; font-size:0.95rem;}
+  .job-row-tag{
+    font-family:'IBM Plex Mono'; font-size:0.64rem; text-transform:uppercase;
+    padding:3px 9px; border-radius:100px; background:#E3F0EE; color:var(--teal); font-weight:600;
+  }
+  .job-row-meta{font-size:0.8rem; color:var(--ink-soft); margin-bottom:10px;}
+  .job-row-bottom{display:flex; align-items:center; justify-content:space-between;}
+  .job-row-date{font-family:'IBM Plex Mono'; font-size:0.68rem; color:#A6ACB5;}
+  .link-view{font-size:0.82rem; font-weight:600; color:var(--navy);}
+
+  .empty-state{
+    text-align:center; padding:28px 16px; color:var(--ink-soft); font-size:0.86rem;
+    background:var(--white); border:1px dashed var(--line); border-radius:12px;
+  }
+
+  footer{text-align:center; padding:24px 20px; font-family:'IBM Plex Mono'; font-size:0.72rem; color:#A6ACB5;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="brand-mark">JU</span>Job Univers</div>
+  <div class="topbar-actions">
+    <a href="messages.html" class="icon-btn" title="Messages">💬</a>
+    <a href="index.html" class="icon-btn" title="Accueil">🏠</a>
+    <a href="login.html" class="logout-link">Déconnexion</a>
+  </div>
+</div>
+
+<div class="welcome">
+  <div class="welcome-name" id="company-name">Espace recruteur</div>
+  <div class="welcome-sub">Gérez vos offres et suivez vos candidatures.</div>
+</div>
+
+<div class="stat-row">
+  <div class="stat-card">
+    <div class="num" id="stat-published">0</div>
+    <div class="lbl">Offres publiées</div>
+  </div>
+  <div class="stat-card">
+    <div class="num">0</div>
+    <div class="lbl">Candidatures</div>
+  </div>
+  <div class="stat-card">
+    <div class="num">0</div>
+    <div class="lbl">Vues totales</div>
+  </div>
+</div>
+
+<main>
+
+  <div class="publish-cta">
+    <div>
+      <h3>Nouvelle offre</h3>
+      <p>Publiez un poste en quelques minutes</p>
+    </div>
+    <a href="publish-job.html" class="btn-publish">+ Publier</a>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <h2>Mes offres publiées</h2>
+    </div>
+    <div id="job-rows">
+      <!-- rempli par JS -->
+    </div>
+    <div class="empty-state" id="job-empty" hidden>
+      Vous n'avez publié aucune offre pour l'instant.<br>
+      <a href="publish-job.html" class="link-view">Publier ma première offre →</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>© 2026 Job Univers — Tous droits réservés</footer>
+
+<script>
+  const JOBS_API = "http://localhost:3002";
+
+  const savedRecruiter = JSON.parse(localStorage.getItem('ju_recruiter') || 'null');
+  if (savedRecruiter) {
+    document.getElementById('company-name').textContent = savedRecruiter.company || "Espace recruteur";
+  }
+
+  const recruiterEmail = (savedRecruiter && savedRecruiter.email) || '';
+
+  function loadJobs() {
+    if (!recruiterEmail) {
+      document.getElementById('job-empty').hidden = false;
+      return;
+    }
+
+    fetch(`${JOBS_API}/jobs/mine?email=${encodeURIComponent(recruiterEmail)}`)
+      .then(r => r.json())
+      .then(data => {
+        const jobs = data.jobs || [];
+        document.getElementById('stat-published').textContent = jobs.length;
+
+        if (jobs.length === 0) {
+          document.getElementById('job-empty').hidden = false;
+          return;
+        }
+
+        const container = document.getElementById('job-rows');
+        jobs.forEach(job => {
+          const dateStr = new Date(job.createdAt).toLocaleDateString('fr-FR');
+          const params = new URLSearchParams({
+            title: job.title, company: job.company, location: job.location,
+            contract: job.contract, tag: job.tag, salary: job.salary,
+            description: job.description, date: dateStr
+          });
+
+          const row = document.createElement('div');
+          row.className = 'job-row';
+          row.innerHTML = `
+            <div class="job-row-top">
+              <span class="job-row-title">${job.title}</span>
+              <span class="job-row-tag">${job.tag}</span>
+            </div>
+            <div class="job-row-meta">${job.company} · ${job.location} · ${job.contract}</div>
+            <div class="job-row-bottom">
+              <span class="job-row-date">Publié le ${dateStr}</span>
+              <a href="job-detail.html?${params.toString()}" class="link-view">Voir l'offre →</a>
+            </div>
+          `;
+          container.appendChild(row);
+        });
+      })
+      .catch(() => {
+        document.getElementById('job-empty').hidden = false;
+        document.getElementById('job-empty').innerHTML =
+          "⚠️ Impossible de contacter le serveur des offres. Vérifiez qu'il est bien lancé.";
+      });
+  }
+
+  loadJobs();
+</script>
+
+</body>
+</html>
+

@@ -219,7 +219,17 @@
       : 'Se connecter en tant que recruteur';
     document.getElementById('switch-link').innerHTML = isCandidat
       ? 'Pas encore de compte ? <a href="#">Créer un compte candidat</a>'
-: 'Pas encore de compte entreprise ? <a href="signup-recruteur.html">Créer un compte recruteur</a>';  }
+: 'Pas encore de compte entreprise ? <a href="signup-recruteur.html">Créer un compte recruteur</a>'; 
+ } 
+document.querySelector('form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const isRecruiter = document.getElementById('tab-recruteur').classList.contains('active');
+  if (isRecruiter) {
+    window.location.href = 'dashboard-recruteur.html';
+  } else {
+    window.location.href = 'dashboard.html';
+  }
+});
 </script>
 
 </body>
