@@ -13,11 +13,25 @@ Serve Brotli Files: false
 Default File Extension: none
 
 Available on:
+  http://10.138.108.84:8081
   http://127.0.0.1:8081
-  http://10.78.9.30:8081
 Hit CTRL-C to stop the server
 
-[2026-07-27T08:23:34.947Z]  "GET /" "curl/8.21.0"
-[2026-07-27T08:24:17.399Z]  "GET /dashboard.html?v=5" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-27T08:24:17.888Z]  "GET /photo-editor.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-27T08:24:28.188Z]  "GET /edit-profile.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:52:28.657Z]  "GET /" "curl/8.21.0"
+[2026-07-27T19:53:47.259Z]  "GET /dashboard-recruteur.html?v=100" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:53:47.712Z]  "GET /photo-editor.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:53:58.437Z]  "GET /login.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:53:58.486Z]  "GET /chatbot.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:54:02.140Z]  "GET /dashboard-recruteur.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:54:02.184Z]  "GET /photo-editor.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:54:10.775Z]  "GET /publish-job.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:54:15.320Z]  "GET /index.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:54:15.362Z]  "GET /chatbot.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:54:31.997Z]  "GET /login.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:54:32.527Z]  "GET /chatbot.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:54:37.599Z]  "GET /dashboard-recruteur.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:54:37.628Z]  "GET /photo-editor.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:54:42.910Z]  "GET /edit-profile-recruteur.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:54:43.384Z]  "GET /photo-editor.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:54:54.579Z]  "GET /dashboard-recruteur.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-27T19:54:55.085Z]  "GET /photo-editor.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"

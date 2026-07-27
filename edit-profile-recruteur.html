@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profil entreprise — Job Univers</title>
+<style>
+  :root{
+    --navy:#0F1B2D; --navy-light:#16273E; --cream:#F7F5F1; --gold:#E8A33D; --teal:#2E7D6B;
+    --ink:#1A1F26; --ink-soft:#5B6470; --line:#E4E1D9; --white:#FFFFFF; --danger:#C4432E; --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Inter', sans-serif; background:var(--cream); color:var(--ink); -webkit-font-smoothing:antialiased;}
+  h1,h2,.brand{font-family:'Sora', sans-serif;}
+  a{color:inherit; text-decoration:none;}
+
+  .topbar{background:var(--navy); color:var(--white); padding:16px 20px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50;}
+  .brand{display:flex; align-items:center; gap:10px; font-size:1.02rem; font-weight:700;}
+  .brand-mark{width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg, var(--gold), var(--teal)); display:flex; align-items:center; justify-content:center; font-family:'Sora', sans-serif; font-weight:800; color:var(--navy); font-size:0.85rem;}
+  .back-link{font-size:0.8rem; color:rgba(255,255,255,0.75);}
+
+  .wrap{max-width:560px; margin:0 auto; padding:20px 20px 90px;}
+  h1.title{font-size:1.4rem; font-weight:800; margin-bottom:4px;}
+  p.subtitle{color:var(--ink-soft); font-size:0.88rem; margin-bottom:20px;}
+
+  .card{background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:20px 18px; margin-bottom:16px;}
+  .card h2{font-size:0.92rem; font-weight:700; margin-bottom:14px; color:var(--navy); display:flex; align-items:center; gap:8px;}
+
+  .field-group{margin-bottom:14px;}
+  label{display:block; font-size:0.76rem; font-weight:600; margin-bottom:6px;}
+  .field{display:flex; align-items:center; gap:10px; border:1.5px solid var(--line); border-radius:9px; padding:11px 13px;}
+  .field:focus-within{border-color:var(--navy);}
+  .field input, .field textarea, .field select{border:none; outline:none; font-family:'Inter'; font-size:0.9rem; width:100%; background:transparent; color:var(--ink); resize:vertical;}
+  .field input::placeholder, .field textarea::placeholder{color:#9AA1AB;}
+  .row-2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+
+  .logo-row{display:flex; align-items:center; gap:14px; margin-bottom:18px;}
+  .logo-avatar{
+    width:72px; height:72px; border-radius:14px; background:linear-gradient(135deg,var(--gold),var(--teal));
+    display:flex; align-items:center; justify-content:center; font-family:'Sora',sans-serif; font-weight:800;
+    color:var(--navy); font-size:1.3rem; cursor:pointer; background-size:cover; background-position:center; flex-shrink:0;
+  }
+  .logo-hint{font-size:0.78rem; color:var(--ink-soft);}
+
+  .file-drop{border:1.5px dashed var(--line); border-radius:9px; padding:14px; text-align:center; font-size:0.82rem; color:var(--ink-soft); cursor:pointer;}
+  .file-drop.filled{border-color:var(--teal); color:var(--teal); border-style:solid; background:#F0F9F5;}
+  .file-input{display:none;}
+
+  .badge-status{
+    display:flex; align-items:center; gap:10px; padding:12px 14px; border-radius:10px; font-size:0.84rem; margin-bottom:14px;
+  }
+  .badge-status.none{background:#F1EFEA; color:var(--ink-soft);}
+  .badge-status.pending{background:#FFF4E0; color:#B57612;}
+  .badge-status.verified{background:#E4F3E9; color:#22823F; font-weight:600;}
+
+  .btn-primary{width:100%; background:var(--navy); color:var(--white); border:none; border-radius:10px; padding:14px; font-family:'Sora'; font-weight:700; font-size:0.95rem; cursor:pointer; position:sticky; bottom:16px; box-shadow:0 12px 24px -8px rgba(15,27,45,0.4);}
+  .btn-primary:hover{background:var(--navy-light);}
+
+  .msg{font-size:0.84rem; padding:12px 14px; border-radius:8px; margin-bottom:16px; text-align:center;}
+  .msg.success{background:#E4F3E9; color:#22823F;}
+  [hidden]{display:none !important;}
+
+  footer{text-align:center; padding:24px 20px; font-family:'IBM Plex Mono'; font-size:0.72rem; color:#A6ACB5;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="brand-mark">JU</span>Job Univers</div>
+  <a href="dashboard-recruteur.html" class="back-link">← Retour</a>
+</div>
+
+<div class="wrap">
+  <h1 class="title">Profil de l'entreprise</h1>
+  <p class="subtitle">Ces informations rassurent les candidats et améliorent votre visibilité.</p>
+
+  <div id="msg-box"></div>
+
+  <form id="profile-form">
+
+    <div class="card">
+      <h2>🏢 Informations sur l'entreprise</h2>
+
+      <div class="logo-row">
+        <div class="logo-avatar" id="logo-avatar" onclick="document.getElementById('logo-input').click()">JU</div>
+        <div>
+          <div class="logo-hint">Logo de l'entreprise</div>
+          <div class="logo-hint" style="color:var(--navy); font-weight:600; cursor:pointer;" onclick="document.getElementById('logo-input').click()">📷 Modifier</div>
+        </div>
+        <input type="file" id="logo-input" class="file-input" accept="image/*">
+      </div>
+
+      <div class="field-group"><label>Nom de l'entreprise</label><div class="field"><input type="text" id="company" required></div></div>
+      <div class="row-2">
+        <div class="field-group"><label>Secteur d'activité</label><div class="field"><input type="text" id="sector" placeholder="Ex : Mines, IT, BTP..."></div></div>
+        <div class="field-group"><label>Site web</label><div class="field"><input type="url" id="website" placeholder="https://..."></div></div>
+      </div>
+      <div class="field-group"><label>Description de l'entreprise</label><div class="field"><textarea id="description" rows="3" placeholder="Présentez votre entreprise en quelques lignes..."></textarea></div></div>
+      <div class="field-group"><label>Adresse</label><div class="field"><input type="text" id="address" placeholder="Rue, quartier..."></div></div>
+      <div class="row-2">
+        <div class="field-group"><label>Ville</label><div class="field"><input type="text" id="city"></div></div>
+        <div class="field-group"><label>Pays</label><div class="field"><input type="text" id="country"></div></div>
+      </div>
+      <div class="row-2">
+        <div class="field-group"><label>E-mail professionnel</label><div class="field"><input type="email" id="proEmail" readonly style="opacity:0.7;"></div></div>
+        <div class="field-group"><label>Téléphone</label><div class="field"><input type="tel" id="companyPhone" placeholder="+225 07 00 00 00 00"></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🧑‍💼 Responsable du recrutement</h2>
+      <div class="row-2">
+        <div class="field-group"><label>Prénom</label><div class="field"><input type="text" id="contactFirstName"></div></div>
+        <div class="field-group"><label>Nom</label><div class="field"><input type="text" id="contactLastName"></div></div>
+      </div>
+      <div class="field-group"><label>Fonction</label><div class="field"><input type="text" id="contactFunction" placeholder="Ex : Responsable RH"></div></div>
+      <div class="row-2">
+        <div class="field-group"><label>E-mail</label><div class="field"><input type="email" id="contactEmail"></div></div>
+        <div class="field-group"><label>Téléphone</label><div class="field"><input type="tel" id="contactPhone"></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>✅ Vérification de l'entreprise</h2>
+
+      <div class="badge-status" id="badge-status-box">
+        <span id="badge-status-icon">○</span>
+        <span id="badge-status-text">Aucune demande de vérification envoyée.</span>
+      </div>
+
+      <div class="field-group">
+        <label>Registre de commerce (RCCM)</label>
+        <div class="file-drop" id="drop-rccm" onclick="document.getElementById('file-rccm').click()">📎 Choisir un fichier</div>
+        <input type="file" id="file-rccm" class="file-input" accept=".pdf,image/*">
+      </div>
+      <div class="field-group">
+        <label>Numéro d'identification fiscale (si applicable)</label>
+        <div class="field"><input type="text" id="taxId" placeholder="Ex : CI-XXXXXXX"></div>
+      </div>
+      <div class="field-group">
+        <label>Licence ou autorisation (si nécessaire)</label>
+        <div class="file-drop" id="drop-license" onclick="document.getElementById('file-license').click()">📎 Choisir un fichier</div>
+        <input type="file" id="file-license" class="file-input" accept=".pdf,image/*">
+      </div>
+
+      <a href="dashboard-recruteur.html" style="display:block; text-align:center; font-size:0.84rem; font-weight:600; color:var(--navy); margin-top:8px;">
+        → Demander le badge « Entreprise vérifiée » depuis le tableau de bord
+      </a>
+    </div>
+
+    <button type="submit" class="btn-primary">💾 Enregistrer le profil</button>
+  </form>
+</div>
+
+<footer>© 2026 Job Univers — Tous droits réservés</footer>
+
+<script src="photo-editor.js"></script>
+<script>
+  const form = document.getElementById('profile-form');
+  const msgBox = document.getElementById('msg-box');
+  const data = JSON.parse(localStorage.getItem('ju_recruiter') || '{}');
+
+  const simpleFields = [
+    'company','sector','website','description','address','city','country','companyPhone',
+    'contactFirstName','contactLastName','contactFunction','contactEmail','contactPhone','taxId'
+  ];
+  simpleFields.forEach(function (f) {
+    const el = document.getElementById(f);
+    if (el && data[f] !== undefined) el.value = data[f];
+  });
+  document.getElementById('proEmail').value = data.email || '';
+  if (!data.contactEmail && data.email) document.getElementById('contactEmail').value = data.email;
+
+  /* ---------- Logo ---------- */
+  const logoAvatar = document.getElementById('logo-avatar');
+  if (data.logo) {
+    logoAvatar.style.backgroundImage = 'url(' + data.logo + ')';
+    logoAvatar.textContent = '';
+  }
+  document.getElementById('logo-input').addEventListener('change', function () {
+    const file = this.files[0];
+    if (!file) return;
+    openCropModal(file, 'circle', 300, 300, function (croppedDataUrl) {
+      logoAvatar.style.backgroundImage = 'url(' + croppedDataUrl + ')';
+      logoAvatar.textContent = '';
+      pendingLogo = croppedDataUrl;
+    });
+    this.value = '';
+  });
+  let pendingLogo = data.logo || null;
+
+  /* ---------- Statut du badge ---------- */
+  const statusBox = document.getElementById('badge-status-box');
+  const statusIcon = document.getElementById('badge-status-icon');
+  const statusText = document.getElementById('badge-status-text');
+  if (data.verified) {
+    statusBox.className = 'badge-status verified';
+    statusIcon.textContent = '✔';
+    statusText.textContent = 'Entreprise vérifiée';
+  }
+
+  /* ---------- Documents de vérification ---------- */
+  const fileKeys = ['rccm', 'license'];
+  const filesData = data.verificationDocs || {};
+  fileKeys.forEach(function (key) {
+    const drop = document.getElementById('drop-' + key);
+    const input = document.getElementById('file-' + key);
+    if (filesData[key]) {
+      drop.textContent = '✅ ' + filesData[key].name;
+      drop.classList.add('filled');
+    }
+    input.addEventListener('change', function () {
+      const file = input.files[0];
+      if (!file) return;
+      if (file.size > 2.5 * 1024 * 1024) {
+        alert("Ce fichier dépasse 2,5 Mo, merci d'en choisir un plus léger.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function () {
+        filesData[key] = { name: file.name, data: reader.result };
+        drop.textContent = '✅ ' + file.name;
+        drop.classList.add('filled');
+      };
+      reader.readAsDataURL(file);
+    });
+  });
+
+  /* ---------- Enregistrement ---------- */
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const current = JSON.parse(localStorage.getItem('ju_recruiter') || '{}');
+    simpleFields.forEach(function (f) {
+      const el = document.getElementById(f);
+      if (el) current[f] = el.value.trim();
+    });
+    if (pendingLogo) current.logo = pendingLogo;
+    current.verificationDocs = filesData;
+
+    try {
+      localStorage.setItem('ju_recruiter', JSON.stringify(current));
+      msgBox.innerHTML = '<div class="msg success">✅ Profil entreprise enregistré ! Redirection...</div>';
+      setTimeout(function () { window.location.href = 'dashboard-recruteur.html'; }, 1200);
+    } catch (err) {
+      msgBox.innerHTML = '<div class="msg" style="background:#FBEAE7;color:#C4432E;">⚠️ Stockage plein. Réduisez la taille des fichiers.</div>';
+    }
+  });
+</script>
+
+</body>
+</html>
+
