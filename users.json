@@ -1,0 +1,10 @@
+{
+  "stephaneaime73@gmail.com": {
+    "email": "stephaneaime73@gmail.com",
+    "role": "candidat",
+    "salt": "de3dd73a1837ed3aee5aaebb888db3bc",
+    "hash": "24beeab3ed0f0dabf291a6c885de71cad84485670394091b67e3d800c549c547abb977f154d6a8a59a4fb36693da73d35154e46d95a570f14b390e6228e4e524",
+    "failedAttempts": 0,
+    "lockedUntil": null
+  }
+}

@@ -191,6 +191,7 @@
      (localhost) pour l'instant. Pour un site en ligne, il faudra héberger
      verify-server.js sur un vrai serveur et remplacer l'adresse ci-dessous. */
   const API_BASE = "http://localhost:3000";
+  const AUTH_API = "http://localhost:3003";
 
   const step1Form = document.getElementById('step1-form');
   const step2Form = document.getElementById('step2-form');
@@ -202,6 +203,7 @@
 
   let userEmail = "";
   let userName = "";
+  let userPassword = "";
 
   function showMsg(el, text, type) {
     el.innerHTML = `<div class="msg ${type}">${text}</div>`;
@@ -236,6 +238,7 @@
       if (data.success) {
         userEmail = email;
         userName = name;
+        userPassword = password;
         document.getElementById('email-display').textContent = email;
         step1Form.hidden = true;
         step2Form.hidden = false;
@@ -288,6 +291,13 @@
 
       if (data.success) {
         localStorage.setItem('ju_candidate', JSON.stringify({ name: userName, email: userEmail }));
+        try {
+          await fetch(`${AUTH_API}/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: userEmail, password: userPassword, role: 'candidat' })
+          });
+        } catch (err) { /* le compte candidat reste utilisable localement même si ça échoue */ }
         showMsg(msg2, "✅ Compte validé ! Redirection...", 'success');
         setTimeout(() => window.location.href = 'dashboard.html', 1200);
       } else {
@@ -318,7 +328,5 @@
   });
 </script>
 
-<script src="i18n.js"></script>
 </body>
 </html>
-

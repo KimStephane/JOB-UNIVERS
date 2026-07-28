@@ -9,6 +9,7 @@
 echo "🔄 Arrêt des anciens serveurs..."
 pkill -f "http-server" 2>/dev/null
 pkill -f "node verify-server.js" 2>/dev/null
+pkill -f "node auth-server.js" 2>/dev/null
 pkill -f "node messages-server.js" 2>/dev/null
 pkill -f "node jobs-server.js" 2>/dev/null
 sleep 1
@@ -22,6 +23,9 @@ echo "  ✅ Serveur web (8081) — cache désactivé"
 nohup node verify-server.js > server-verify.log 2>&1 &
 echo "  ✅ Serveur de validation e-mail (3000)"
 
+nohup node auth-server.js > server-auth.log 2>&1 &
+echo "  ✅ Serveur d'authentification (3003)"
+
 nohup node messages-server.js > server-messages.log 2>&1 &
 echo "  ✅ Serveur de messagerie (3001)"
 
@@ -34,7 +38,7 @@ echo "======================================"
 echo "🔍 Vérification que tout tourne bien..."
 echo ""
 
-for port in 8081 3000 3001 3002; do
+for port in 8081 3000 3003 3001 3002; do
   if curl -s -o /dev/null -w "%{http_code}" "http://localhost:$port" | grep -qE "200|404"; then
     echo "  🟢 Port $port : actif"
   else

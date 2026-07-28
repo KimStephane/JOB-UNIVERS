@@ -148,7 +148,7 @@
   const style = document.createElement('style');
   style.textContent = `
     #ju-lang-switcher{
-      position:fixed; top:14px; right:14px; z-index:9998;
+      position:fixed; bottom:20px; left:14px; z-index:9998;
       background:rgba(255,255,255,0.95); border:1px solid #E4E1D9; border-radius:100px;
       padding:6px 10px; font-family:'IBM Plex Mono', monospace; font-size:0.72rem;
       display:flex; gap:6px; box-shadow:0 6px 16px -4px rgba(15,27,45,0.25);
