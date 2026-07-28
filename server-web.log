@@ -17,10 +17,16 @@ Available on:
   http://10.213.168.50:8081
 Hit CTRL-C to stop the server
 
-[2026-07-28T00:42:51.551Z]  "GET /" "curl/8.21.0"
-[2026-07-28T00:44:13.130Z]  "GET /dashboard-recruteur.html?v=200" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-28T00:44:13.630Z]  "GET /photo-editor.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-28T00:44:27.015Z]  "GET /login.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-28T00:44:27.539Z]  "GET /chatbot.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-28T00:44:38.967Z]  "GET /dashboard-recruteur.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-28T00:44:39.474Z]  "GET /photo-editor.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-28T00:58:57.568Z]  "GET /" "curl/8.21.0"
+[2026-07-28T01:00:15.798Z]  "GET /index.html?v=3" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-28T01:00:16.347Z]  "GET /chatbot.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-28T01:00:16.364Z]  "GET /auth-state.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-28T01:00:33.856Z]  "GET /login.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-28T01:00:33.904Z]  "GET /chatbot.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-28T01:00:48.465Z]  "GET /dashboard.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-28T01:00:48.496Z]  "GET /photo-editor.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-28T01:00:51.441Z]  "GET /index.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-28T01:00:51.517Z]  "GET /chatbot.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-28T01:00:51.522Z]  "GET /auth-state.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-28T01:00:57.619Z]  "GET /dashboard.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-28T01:00:57.642Z]  "GET /photo-editor.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
