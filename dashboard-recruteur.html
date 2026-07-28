@@ -94,6 +94,29 @@
     background:var(--white); border:1px dashed var(--line); border-radius:12px;
   }
 
+  .app-row{background:var(--white); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:12px;}
+  .app-row-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:4px;}
+  .app-candidate{font-weight:700; font-size:0.95rem;}
+  .app-for{font-size:0.8rem; color:var(--ink-soft); margin-bottom:10px;}
+  .app-status{
+    font-family:'IBM Plex Mono'; font-size:0.64rem; text-transform:uppercase; padding:4px 10px;
+    border-radius:100px; font-weight:600; white-space:nowrap;
+  }
+  .app-status.pending{background:#FFF4E0; color:#B57612;}
+  .app-status.interview{background:#E3F0EE; color:var(--teal);}
+  .app-status.rejected{background:#FBEAE7; color:#C4432E;}
+  .app-status.accepted{background:#E4F3E9; color:#22823F;}
+  .app-actions{display:flex; gap:6px; flex-wrap:wrap; margin-top:10px;}
+  .app-btn{
+    flex:1; min-width:80px; font-family:'Sora'; font-size:0.74rem; font-weight:600;
+    padding:8px; border-radius:7px; border:1px solid var(--line); background:var(--white);
+    color:var(--ink); cursor:pointer;
+  }
+  .app-btn.accept{background:#E4F3E9; border-color:#B8DFC4; color:#22823F;}
+  .app-btn.reject{background:#FBEAE7; border-color:#F0C4BC; color:#C4432E;}
+  .app-btn.interview{background:#E3F0EE; border-color:#B8DCD6; color:var(--teal);}
+  .app-cv-link{font-size:0.78rem; font-weight:600; color:var(--navy); display:inline-block; margin-top:8px;}
+
   footer{text-align:center; padding:24px 20px; font-family:'IBM Plex Mono'; font-size:0.72rem; color:#A6ACB5;}
   [hidden]{display:none !important;}
 </style>
@@ -165,7 +188,7 @@
     <div class="lbl">Offres publiées</div>
   </div>
   <div class="stat-card">
-    <div class="num">0</div>
+    <div class="num" id="stat-applications">0</div>
     <div class="lbl">Candidatures</div>
   </div>
   <div class="stat-card">
@@ -190,6 +213,16 @@
       <p>Publiez un poste en quelques minutes</p>
     </div>
     <a href="publish-job.html" class="btn-publish">+ Publier</a>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <h2>Candidatures reçues</h2>
+    </div>
+    <div id="app-rows"></div>
+    <div class="empty-state" id="app-empty" hidden>
+      Aucune candidature reçue pour l'instant.
+    </div>
   </div>
 
   <div class="section">
@@ -327,6 +360,73 @@
   }
 
   loadJobs();
+  loadApplications();
+
+  function loadApplications() {
+    if (!recruiterEmail) {
+      document.getElementById('app-empty').hidden = false;
+      return;
+    }
+
+    fetch(`${JOBS_API}/applications/recruiter?email=${encodeURIComponent(recruiterEmail)}`)
+      .then(r => r.json())
+      .then(data => {
+        const apps = data.applications || [];
+        document.getElementById('stat-applications') && (document.getElementById('stat-applications').textContent = apps.length);
+
+        if (apps.length === 0) {
+          document.getElementById('app-empty').hidden = false;
+          return;
+        }
+
+        const statusLabels = { pending: 'En attente', interview: 'Entretien', accepted: 'Acceptée', rejected: 'Refusée' };
+        const container = document.getElementById('app-rows');
+
+        apps.forEach(app => {
+          const dateStr = new Date(app.createdAt).toLocaleDateString('fr-FR');
+          const row = document.createElement('div');
+          row.className = 'app-row';
+          row.innerHTML = `
+            <div class="app-row-top">
+              <span class="app-candidate">${app.candidateName || app.candidateEmail}</span>
+              <span class="app-status ${app.status}" id="status-${app.id}">${statusLabels[app.status]}</span>
+            </div>
+            <div class="app-for">Pour : ${app.jobTitle} · ${dateStr}</div>
+            <div style="font-size:0.8rem; color:var(--ink-soft);">
+              📧 ${app.candidateEmail}${app.candidatePhone ? ' · 📞 ' + app.candidatePhone : ''}
+            </div>
+            ${app.cv ? `<a href="${app.cv.data}" download="${app.cv.name}" class="app-cv-link">📄 Télécharger le CV</a>` : '<div style="font-size:0.76rem; color:#A6ACB5; margin-top:8px;">Aucun CV joint</div>'}
+            <div class="app-actions">
+              <button type="button" class="app-btn accept" onclick="updateStatus('${app.id}','accepted')">✓ Accepter</button>
+              <button type="button" class="app-btn interview" onclick="updateStatus('${app.id}','interview')">📅 Entretien</button>
+              <button type="button" class="app-btn reject" onclick="updateStatus('${app.id}','rejected')">✕ Refuser</button>
+            </div>
+          `;
+          container.appendChild(row);
+        });
+      })
+      .catch(() => {
+        document.getElementById('app-empty').hidden = false;
+        document.getElementById('app-empty').innerHTML = "⚠️ Impossible de contacter le serveur des candidatures.";
+      });
+  }
+
+  window.updateStatus = function (id, status) {
+    fetch(`${JOBS_API}/applications/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status })
+    })
+      .then(r => r.json())
+      .then(result => {
+        if (result.success) {
+          const labels = { pending: 'En attente', interview: 'Entretien', accepted: 'Acceptée', rejected: 'Refusée' };
+          const el = document.getElementById('status-' + id);
+          el.textContent = labels[status];
+          el.className = 'app-status ' + status;
+        }
+      });
+  };
 </script>
 
 <script src="photo-editor.js"></script>

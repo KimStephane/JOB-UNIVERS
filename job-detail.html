@@ -205,11 +205,53 @@
   const recruiterEmail = data.company.toLowerCase().replace(/[^a-z0-9]/g, '') + '@recruteur.jobunivers.com';
   document.getElementById('contact-link').href = `messages.html?with=${encodeURIComponent(recruiterEmail)}`;
 
-  /* ---------- Boutons ---------- */
-  document.getElementById('btn-apply').addEventListener('click', () => {
-    document.getElementById('confirm-box').classList.add('show');
-    document.getElementById('btn-apply').textContent = "Candidature envoyée ✓";
-    document.getElementById('btn-apply').disabled = true;
+  /* ---------- Bouton Postuler : envoi réel de la candidature ---------- */
+  const APPLICATIONS_API = "http://localhost:3002";
+
+  document.getElementById('btn-apply').addEventListener('click', async () => {
+    const candidate = JSON.parse(localStorage.getItem('ju_candidate') || 'null');
+
+    if (!candidate || !candidate.email) {
+      if (confirm("Vous devez être connecté en tant que candidat pour postuler. Aller à la connexion ?")) {
+        window.location.href = 'login.html';
+      }
+      return;
+    }
+
+    const btn = document.getElementById('btn-apply');
+    btn.disabled = true;
+    btn.textContent = "Envoi en cours...";
+
+    try {
+      const res = await fetch(`${APPLICATIONS_API}/applications`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jobId: recruiterEmail + '-' + data.title,
+          jobTitle: data.title,
+          company: data.company,
+          recruiterEmail: recruiterEmail,
+          candidateEmail: candidate.email,
+          candidateName: candidate.name || '',
+          candidatePhone: candidate.phone || candidate.whatsapp || '',
+          cv: (candidate.documents && candidate.documents.cv) ? candidate.documents.cv : null
+        })
+      });
+      const result = await res.json();
+
+      if (result.success) {
+        document.getElementById('confirm-box').classList.add('show');
+        btn.textContent = "Candidature envoyée ✓";
+      } else {
+        alert(result.error || "Échec de l'envoi de la candidature.");
+        btn.disabled = false;
+        btn.textContent = "Postuler";
+      }
+    } catch (err) {
+      alert("Impossible de contacter le serveur des candidatures. Vérifiez qu'il est bien lancé.");
+      btn.disabled = false;
+      btn.textContent = "Postuler";
+    }
   });
 
   document.getElementById('btn-save').addEventListener('click', function () {

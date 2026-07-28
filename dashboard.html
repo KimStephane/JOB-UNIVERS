@@ -204,8 +204,10 @@
       <div class="profile-info">
         <div class="name" id="profile-name">Complétez votre profil</div>
         <div class="role" id="profile-role">Aucun métier renseigné</div>
+        <div class="role" id="profile-location" style="display:none;"></div>
         <div class="completeness"><div class="completeness-fill" id="completeness-bar"></div></div>
         <div class="completeness-label" id="completeness-label">0% complété</div>
+        <a href="#" id="whatsapp-link" style="display:none; margin-top:8px; font-size:0.78rem; color:#22823F; font-weight:600;" target="_blank">💬 Contacter sur WhatsApp</a>
       </div>
     </div>
   </div>
@@ -246,17 +248,63 @@
      ========================================================== */
   const savedProfile = JSON.parse(localStorage.getItem('ju_candidate') || 'null');
 
+  function computeCompleteness(p) {
+    if (!p) return 0;
+    const fields = ['name', 'phone', 'location', 'role', 'experience', 'skills', 'bio', 'photo'];
+    const filled = fields.filter(f => p[f] && p[f].toString().trim().length > 0).length;
+    return Math.round((filled / fields.length) * 100);
+  }
+
   const candidate = {
     name: savedProfile ? savedProfile.name : "",
-    role: "",               // ex: "Agent QHSE"
-    completeness: savedProfile ? 40 : 0   // 40% dès que le compte est créé
+    role: savedProfile ? savedProfile.role : "",
+    completeness: computeCompleteness(savedProfile)
   };
 
-  const applications = [
-    // Exemple de structure (décommentez et adaptez) :
-    // { title: "Agent HSE", company: "Secteur minier", date: "Il y a 2j", status: "pending" },
-    // { title: "Informaticien", company: "Entreprise internationale", date: "Il y a 5j", status: "interview" },
-  ];
+  const applications = [];
+  const APPS_API = "http://localhost:3002";
+
+  const savedList = document.getElementById('saved-list');
+  const appList = document.getElementById('app-list');
+
+  if (savedProfile && savedProfile.email) {
+    fetch(`${APPS_API}/applications/candidate?email=${encodeURIComponent(savedProfile.email)}`)
+      .then(r => r.json())
+      .then(result => {
+        const apps = result.applications || [];
+        document.getElementById('stat-sent').textContent = apps.length;
+        document.getElementById('stat-pending').textContent = apps.filter(a => a.status === 'pending').length;
+        document.getElementById('stat-interview').textContent = apps.filter(a => a.status === 'interview').length;
+
+        if (apps.length === 0) {
+          document.getElementById('app-empty').hidden = false;
+          return;
+        }
+
+        const statusLabels = { pending: "En attente", interview: "Entretien", rejected: "Refusée", accepted: "Acceptée" };
+        apps.forEach(app => {
+          const dateStr = new Date(app.createdAt).toLocaleDateString('fr-FR');
+          const card = document.createElement('div');
+          card.className = 'app-card';
+          card.innerHTML = `
+            <div class="app-top">
+              <div>
+                <div class="app-title">${app.jobTitle}</div>
+                <div class="app-company">${app.company}</div>
+              </div>
+              <span class="status ${app.status}">${statusLabels[app.status] || app.status}</span>
+            </div>
+            <div class="app-bottom">
+              <span class="app-date">${dateStr}</span>
+            </div>
+          `;
+          appList.appendChild(card);
+        });
+      })
+      .catch(() => { document.getElementById('app-empty').hidden = false; });
+  } else {
+    document.getElementById('app-empty').hidden = false;
+  }
 
   const savedJobs = [
     // { title: "Superviseur QHSE", company: "Côte d'Ivoire" },
@@ -270,6 +318,20 @@
     candidate.name || "Complétez votre profil";
   document.getElementById('profile-role').textContent =
     candidate.role || "Aucun métier renseigné";
+
+  if (savedProfile && savedProfile.location) {
+    const locEl = document.getElementById('profile-location');
+    locEl.textContent = '📍 ' + savedProfile.location;
+    locEl.style.display = 'block';
+  }
+
+  if (savedProfile && savedProfile.whatsapp) {
+    const waNumber = savedProfile.whatsapp.replace(/[^0-9]/g, '');
+    const waLink = document.getElementById('whatsapp-link');
+    waLink.href = `https://wa.me/${waNumber}`;
+    waLink.style.display = 'inline-block';
+  }
+
   document.getElementById('completeness-bar').style.width = candidate.completeness + '%';
   document.getElementById('completeness-label').textContent = candidate.completeness + '% complété';
 
@@ -320,39 +382,7 @@
     coverInput.value = '';
   });
 
-  /* ---------- Rendu des candidatures ---------- */
-  const statusLabels = {
-    pending: "En attente",
-    interview: "Entretien",
-    rejected: "Refusée",
-    accepted: "Acceptée"
-  };
-
-  const appList = document.getElementById('app-list');
-  if (applications.length === 0) {
-    document.getElementById('app-empty').hidden = false;
-  } else {
-    applications.forEach(app => {
-      const card = document.createElement('div');
-      card.className = 'app-card';
-      card.innerHTML = `
-        <div class="app-top">
-          <div>
-            <div class="app-title">${app.title}</div>
-            <div class="app-company">${app.company}</div>
-          </div>
-          <span class="status ${app.status}">${statusLabels[app.status] || app.status}</span>
-        </div>
-        <div class="app-bottom">
-          <span class="app-date">${app.date}</span>
-        </div>
-      `;
-      appList.appendChild(card);
-    });
-  }
-
   /* ---------- Rendu des offres sauvegardées ---------- */
-  const savedList = document.getElementById('saved-list');
   if (savedJobs.length === 0) {
     document.getElementById('saved-empty').hidden = false;
   } else {
@@ -369,13 +399,6 @@
       savedList.appendChild(card);
     });
   }
-
-  /* ---------- Mise à jour des statistiques ---------- */
-  document.getElementById('stat-sent').textContent = applications.length;
-  document.getElementById('stat-pending').textContent =
-    applications.filter(a => a.status === 'pending').length;
-  document.getElementById('stat-interview').textContent =
-    applications.filter(a => a.status === 'interview').length;
 </script>
 
 <script src="photo-editor.js"></script>
