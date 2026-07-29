@@ -12,10 +12,10 @@
   if (!loginLink) return;
 
   if (candidate && candidate.email) {
-    loginLink.textContent = 'Mon espace';
+    loginLink.textContent = 'Tableau de bord';
     loginLink.href = 'dashboard.html';
   } else if (recruiter && recruiter.email) {
-    loginLink.textContent = 'Mon espace';
+    loginLink.textContent = 'Tableau de bord';
     loginLink.href = 'dashboard-recruteur.html';
   }
 })();
