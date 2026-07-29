@@ -81,7 +81,13 @@
       .then(res => res.json().then(data => ({ ok: res.ok, data })))
       .then(({ ok, data }) => {
         if (ok && data.success) {
-          window.location.href = data.role === 'recruteur' ? 'dashboard-recruteur.html' : 'dashboard.html';
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get('redirect');
+          if (redirect) {
+            window.location.href = redirect;
+          } else {
+            window.location.href = 'index.html';
+          }
         } else {
           errorBox.textContent = data.error || "Adresse e-mail ou mot de passe incorrect.";
           errorBox.style.display = 'block';

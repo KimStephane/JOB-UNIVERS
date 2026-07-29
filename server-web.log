@@ -13,19 +13,8 @@ Serve Brotli Files: false
 Default File Extension: none
 
 Available on:
+  http://10.138.108.84:8081
   http://127.0.0.1:8081
-  http://10.195.38.20:8081
 Hit CTRL-C to stop the server
 
-[2026-07-29T08:15:13.252Z]  "GET /" "curl/8.21.0"
-[2026-07-29T08:17:12.695Z]  "GET /index.html?v=7" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-29T08:17:12.758Z]  "GET /chatbot.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-29T08:17:12.792Z]  "GET /auth-state.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-29T08:17:12.798Z]  "GET /i18n.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-29T08:17:17.084Z]  "GET /dashboard.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-29T08:17:17.119Z]  "GET /photo-editor.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-29T08:17:17.125Z]  "GET /i18n.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-29T08:17:56.987Z]  "GET /login.html" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-29T08:17:57.063Z]  "GET /chatbot.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-29T08:17:57.075Z]  "GET /i18n.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-[2026-07-29T08:17:57.081Z]  "GET /auth-security.js" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
+[2026-07-29T22:36:14.605Z]  "GET /" "curl/8.21.0"

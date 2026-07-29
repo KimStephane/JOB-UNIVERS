@@ -319,7 +319,11 @@
           });
         } catch (err) { /* le compte reste utilisable localement même si ça échoue */ }
         showMsg(msg2, "✅ Compte recruteur validé ! Redirection...", 'success');
-        setTimeout(() => window.location.href = 'login.html', 1200);
+        setTimeout(() => {
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get('redirect');
+          window.location.href = 'login.html' + (redirect ? '?redirect=' + encodeURIComponent(redirect) : '');
+        }, 1200);
       } else {
         showMsg(msg2, data.error || "Code incorrect.", 'error');
       }

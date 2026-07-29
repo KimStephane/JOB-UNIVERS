@@ -299,7 +299,11 @@
           });
         } catch (err) { /* le compte candidat reste utilisable localement même si ça échoue */ }
         showMsg(msg2, "✅ Compte validé ! Redirection...", 'success');
-        setTimeout(() => window.location.href = 'dashboard.html', 1200);
+        setTimeout(() => {
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get('redirect');
+          window.location.href = redirect || 'index.html';
+        }, 1200);
       } else {
         showMsg(msg2, data.error || "Code incorrect.", 'error');
       }
@@ -330,3 +334,4 @@
 
 </body>
 </html>
+
